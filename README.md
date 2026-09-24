@@ -2,6 +2,8 @@
 
 A production-grade, end-to-end B2B lead analytics and AI-narrative platform built across nine phases — from raw data ingestion to an interactive Streamlit dashboard with IBM watsonx.ai integration.
 
+![Lead Intelligence Platform Hero Overview](dashboard_screenshots/streamlit_dashboard/01_overview.png)
+
 ---
 
 ## Table of Contents
@@ -422,29 +424,56 @@ No credentials are hard-coded in any source file. The project runs fully without
 
 ## 11. Interactive Dashboard
 
-### Launch
+The platform provides two complementary dashboard interfaces: an interactive **Streamlit** application featuring dynamic filtering, machine learning inference, and watsonx.ai narrative generation, as well as a standalone **HTML / ECharts** executive dashboard.
 
+### 11.1 Streamlit Dashboard
+
+#### Launch
 ```bash
 streamlit run dashboard/streamlit_app.py
 ```
 
-### Views
+#### Views & Screenshots
 
-| Tab | Content |
-|---|---|
-| 📋 Overview | KPI cards (Total Leads, Conversion Rate, Top Source, Top Group) · Deal-stage bar · Source win-rate bar · Volume vs conversion scatter · Sentiment histogram |
-| 📈 Performance | Source group win rate & volume bars · Source×Group heatmap · Won/Not-Won stacked bar · Full source summary table |
-| 🔬 Explainability | SHAP global (G5) · Permutation importance (G4) · LR coefficients (G1) · SHAP waterfall local cases TP/FP/FN/TN (L1) · Causal boundary statement |
-| 🤖 AI Insights | Provenance banner · Context snapshot · Executive briefing · 9 tabbed insight cards · Regenerate button |
-| 🎯 What-If Scorer | Lead attribute form · Plotly gauge chart · Win probability metric · Feature contribution bar |
+##### 📋 View 1: Overview
+Live KPI metric tiles (Total Leads, Win Rate, Top Performing Channel), full 10-stage funnel distribution, ranked win-rate chart across all 20 channels, and lead volume vs. conversion rate scatter analysis.
 
-### Filters (sidebar)
+![Streamlit Overview](dashboard_screenshots/streamlit_dashboard/01_overview.png)
 
-- **Lead Source** — multiselect, all 20 sources
-- **Source Group** — multiselect, all 7 groups
-- **Lead Owner** — case-insensitive substring search
+##### 📈 View 2: Channel Performance
+Detailed channel group breakdown (Referral/Partner, Events, Outbound, Inbound, Paid Ads, Social Media, Other), composite conversion heatmap, won-vs-lost stacked distributions, and full tabular summaries.
 
-All metrics, KPI cards, and charts update live on filter change. No hardcoded values — every number is computed from the loaded CSV or loaded from JSON at runtime.
+![Streamlit Performance](dashboard_screenshots/streamlit_dashboard/02_performance.png)
+
+##### 🔬 View 3: Model Explainability
+Global SHAP feature importance, permutation importance drops, logistic regression coefficients, and local SHAP waterfall case breakdowns (True Positive, False Positive, True Negative, False Negative) alongside causal boundary disclosures.
+
+![Streamlit Explainability](dashboard_screenshots/streamlit_dashboard/03_explainability.png)
+
+##### 🤖 View 4: AI Insights & Watsonx Narrative
+Executive briefing generated via IBM watsonx.ai Granite (with heuristic fallback), lineage & provenance metadata snapshot, and 9 categorized strategic insight cards.
+
+![Streamlit AI Insights](dashboard_screenshots/streamlit_dashboard/04_ai_insights.png)
+
+##### 🎯 View 5: What-If Lead Scorer
+Interactive simulator allowing sales leaders to adjust lead attributes (Source, Channel Group, Owner, Notes sentiment, Word count) to receive real-time win probability scores with feature contribution breakdowns.
+
+![Streamlit What-If Scorer](dashboard_screenshots/streamlit_dashboard/05_what_if_scorer.png)
+
+---
+
+### 11.2 Standalone HTML / ECharts Dashboard
+
+A single-page, self-contained executive dashboard located at [`dashboard/index.html`](dashboard/index.html) built with Apache ECharts.
+
+| View | Screenshot | Description |
+|---|---|---|
+| **Overview** | ![HTML Overview](dashboard_screenshots/html_dashboard/01_overview.png) | High-level metrics, deal stage donut chart, and ranked channel win rates. |
+| **Source Performance** | ![HTML Sources](dashboard_screenshots/html_dashboard/02_source_performance.png) | Interactive group filter and sortable channel performance tables. |
+| **Pipeline Funnel** | ![HTML Funnel](dashboard_screenshots/html_dashboard/03_pipeline_funnel.png) | Deal-stage conversion drop-off and terminal outcome analysis. |
+| **ML Model Benchmarks** | ![HTML ML](dashboard_screenshots/html_dashboard/04_ml_model.png) | 5-fold cross-validation ROC-AUC and metric comparisons for LR, RF, and LightGBM. |
+| **Explainability Suite** | ![HTML Explainability](dashboard_screenshots/html_dashboard/05_explainability.png) | Side-by-side feature importance comparisons, SHAP summaries, and coefficient tables. |
+| **AI Insights** | ![HTML AI Insights](dashboard_screenshots/html_dashboard/06_ai_insights.png) | Complete categorized strategic recommendations and correlation vs. causation statement. |
 
 ---
 
