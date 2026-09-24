@@ -1,0 +1,56 @@
+{
+  "data_source": "data/processed/cleaned_leads.csv",
+  "rows_analysed": 100000,
+  "kpi_count": 12,
+  "figures": [
+    "reports/figures\\fig_01_win_rate_by_source.png",
+    "reports/figures\\fig_02_lead_volume_by_source.png",
+    "reports/figures\\fig_03_deal_stage_distribution.png",
+    "reports/figures\\fig_04_funnel_pipeline.png",
+    "reports/figures\\fig_05_outcome_by_source_group_stacked.png",
+    "reports/figures\\fig_06_won_to_lost_ratio.png",
+    "reports/figures\\fig_07_lead_owner_performance.png",
+    "reports/figures\\fig_08_notes_wordcount_by_outcome.png",
+    "reports/figures\\fig_09_notes_sentiment_by_outcome.png",
+    "reports/figures\\fig_10_source_composite_heatmap.png",
+    "reports/figures\\fig_11_sentiment_distribution_kde.png",
+    "reports/figures\\fig_12_wordcount_distribution_boxplot.png"
+  ],
+  "narrative": {
+    "overall_win_rate": {
+      "value": 9.99,
+      "statement": "Overall win rate is 9.99% (9,993 Closed Won out of 100,000 total leads)."
+    },
+    "source_performance": {
+      "top_source": "Podcast",
+      "top_rate": 10.69,
+      "bottom_source": "Networking Event",
+      "bottom_rate": 9.28,
+      "spread_pp": 1.41,
+      "statement": "Win rates span 1.41 pp across 20 sources (Networking Event 9.28% to Podcast 10.69%). The spread is real and reproducible but narrow \u2014 not sufficient for individual-lead prediction.",
+      "causal_note": "Association only. Higher win rates for top sources may reflect unmeasured factors (lead quality, industry) rather than the source itself."
+    },
+    "lead_owner_insight": {
+      "unique_owners": 93012,
+      "owners_1_lead": 86357,
+      "owners_multi_leads": 6655,
+      "statement": "86,357 of 93,012 owners hold exactly 1 lead. Owner-level analysis is therefore unreliable as a performance metric \u2014 most 'win rates' reflect a single binary outcome, not genuine owner ability."
+    },
+    "notes_patterns": {
+      "sentiment_won": 0.0575,
+      "sentiment_lost": 0.0646,
+      "sentiment_diff": 0.0071,
+      "wordcount_won": 5.5023,
+      "wordcount_lost": 5.5056,
+      "statement": "Notes sentiment mean: Won=0.0575, Lost=0.0646 (diff=0.0071, negligible). Notes word count: Won=5.5 words, Lost=5.5 words \u2014 no meaningful difference. Neither sentiment polarity nor text length correlates with deal outcome.",
+      "causal_note": "No causal claim. Correlation between notes features and outcome is near-zero by both visual and statistical inspection."
+    },
+    "source_group_best": {
+      "group": "Referral / Partner",
+      "rate": 10.63,
+      "n": 10070,
+      "statement": "Referral / Partner is the highest-performing channel group at 10.63% win rate (10,070 leads)."
+    }
+  },
+  "correlation_vs_causation_statement": "All patterns identified in this phase are statistical associations observed in the cleaned dataset. No causal claims are made. Differences in win rates across sources, owner assignments, or note characteristics describe correlations that may be explained by unmeasured confounding variables. Causal inference would require controlled experimental design."
+}

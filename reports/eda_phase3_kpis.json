@@ -1,0 +1,773 @@
+{
+  "kpi_01_overall_win_rate": {
+    "total_leads": 100000,
+    "closed_won": 9993,
+    "win_rate_pct": 9.99,
+    "definition": "Closed Won / Total Leads"
+  },
+  "kpi_02_closed_rate": {
+    "closed_total": 29926,
+    "closed_rate_pct": 29.93,
+    "definition": "(Closed Won + Closed Lost + Disqualified) / Total Leads"
+  },
+  "kpi_03_win_rate_by_source": [
+    {
+      "source": "Podcast",
+      "total_leads": 5134,
+      "won": 549,
+      "win_rate_pct": 10.69
+    },
+    {
+      "source": "Partner Program",
+      "total_leads": 5076,
+      "won": 541,
+      "win_rate_pct": 10.66
+    },
+    {
+      "source": "Referral",
+      "total_leads": 4994,
+      "won": 529,
+      "win_rate_pct": 10.59
+    },
+    {
+      "source": "Webinars",
+      "total_leads": 4979,
+      "won": 526,
+      "win_rate_pct": 10.56
+    },
+    {
+      "source": "Content Marketing",
+      "total_leads": 4935,
+      "won": 516,
+      "win_rate_pct": 10.46
+    },
+    {
+      "source": "LinkedIn Outreach",
+      "total_leads": 4825,
+      "won": 501,
+      "win_rate_pct": 10.38
+    },
+    {
+      "source": "Cold Email",
+      "total_leads": 5086,
+      "won": 519,
+      "win_rate_pct": 10.2
+    },
+    {
+      "source": "Cold Call",
+      "total_leads": 5032,
+      "won": 508,
+      "win_rate_pct": 10.1
+    },
+    {
+      "source": "Facebook Ads",
+      "total_leads": 4908,
+      "won": 489,
+      "win_rate_pct": 9.96
+    },
+    {
+      "source": "Chatbot",
+      "total_leads": 4909,
+      "won": 486,
+      "win_rate_pct": 9.9
+    },
+    {
+      "source": "Retargeting Ads",
+      "total_leads": 5102,
+      "won": 505,
+      "win_rate_pct": 9.9
+    },
+    {
+      "source": "Direct Traffic",
+      "total_leads": 4986,
+      "won": 493,
+      "win_rate_pct": 9.89
+    },
+    {
+      "source": "Organic Search (SEO)",
+      "total_leads": 5113,
+      "won": 502,
+      "win_rate_pct": 9.82
+    },
+    {
+      "source": "Trade Show",
+      "total_leads": 5079,
+      "won": 493,
+      "win_rate_pct": 9.71
+    },
+    {
+      "source": "Google Ads",
+      "total_leads": 5020,
+      "won": 487,
+      "win_rate_pct": 9.7
+    },
+    {
+      "source": "Social Media",
+      "total_leads": 4996,
+      "won": 483,
+      "win_rate_pct": 9.67
+    },
+    {
+      "source": "Purchased List",
+      "total_leads": 5015,
+      "won": 479,
+      "win_rate_pct": 9.55
+    },
+    {
+      "source": "Other",
+      "total_leads": 4872,
+      "won": 464,
+      "win_rate_pct": 9.52
+    },
+    {
+      "source": "Website Form",
+      "total_leads": 5069,
+      "won": 471,
+      "win_rate_pct": 9.29
+    },
+    {
+      "source": "Networking Event",
+      "total_leads": 4870,
+      "won": 452,
+      "win_rate_pct": 9.28
+    }
+  ],
+  "kpi_04_win_rate_by_source_group": [
+    {
+      "source_group": "Referral / Partner",
+      "total_leads": 10070,
+      "won": 1070,
+      "win_rate_pct": 10.63
+    },
+    {
+      "source_group": "Events",
+      "total_leads": 20062,
+      "won": 2020,
+      "win_rate_pct": 10.07
+    },
+    {
+      "source_group": "Outbound",
+      "total_leads": 19958,
+      "won": 2007,
+      "win_rate_pct": 10.06
+    },
+    {
+      "source_group": "Inbound",
+      "total_leads": 25012,
+      "won": 2468,
+      "win_rate_pct": 9.87
+    },
+    {
+      "source_group": "Paid Ads",
+      "total_leads": 15030,
+      "won": 1481,
+      "win_rate_pct": 9.85
+    },
+    {
+      "source_group": "Social Media",
+      "total_leads": 4996,
+      "won": 483,
+      "win_rate_pct": 9.67
+    },
+    {
+      "source_group": "Other",
+      "total_leads": 4872,
+      "won": 464,
+      "win_rate_pct": 9.52
+    }
+  ],
+  "kpi_05_volume_by_source": [
+    {
+      "source": "Podcast",
+      "total_leads": 5134,
+      "won": 549,
+      "win_rate_pct": 10.69
+    },
+    {
+      "source": "Organic Search (SEO)",
+      "total_leads": 5113,
+      "won": 502,
+      "win_rate_pct": 9.82
+    },
+    {
+      "source": "Retargeting Ads",
+      "total_leads": 5102,
+      "won": 505,
+      "win_rate_pct": 9.9
+    },
+    {
+      "source": "Cold Email",
+      "total_leads": 5086,
+      "won": 519,
+      "win_rate_pct": 10.2
+    },
+    {
+      "source": "Trade Show",
+      "total_leads": 5079,
+      "won": 493,
+      "win_rate_pct": 9.71
+    },
+    {
+      "source": "Partner Program",
+      "total_leads": 5076,
+      "won": 541,
+      "win_rate_pct": 10.66
+    },
+    {
+      "source": "Website Form",
+      "total_leads": 5069,
+      "won": 471,
+      "win_rate_pct": 9.29
+    },
+    {
+      "source": "Cold Call",
+      "total_leads": 5032,
+      "won": 508,
+      "win_rate_pct": 10.1
+    },
+    {
+      "source": "Google Ads",
+      "total_leads": 5020,
+      "won": 487,
+      "win_rate_pct": 9.7
+    },
+    {
+      "source": "Purchased List",
+      "total_leads": 5015,
+      "won": 479,
+      "win_rate_pct": 9.55
+    },
+    {
+      "source": "Social Media",
+      "total_leads": 4996,
+      "won": 483,
+      "win_rate_pct": 9.67
+    },
+    {
+      "source": "Referral",
+      "total_leads": 4994,
+      "won": 529,
+      "win_rate_pct": 10.59
+    },
+    {
+      "source": "Direct Traffic",
+      "total_leads": 4986,
+      "won": 493,
+      "win_rate_pct": 9.89
+    },
+    {
+      "source": "Webinars",
+      "total_leads": 4979,
+      "won": 526,
+      "win_rate_pct": 10.56
+    },
+    {
+      "source": "Content Marketing",
+      "total_leads": 4935,
+      "won": 516,
+      "win_rate_pct": 10.46
+    },
+    {
+      "source": "Chatbot",
+      "total_leads": 4909,
+      "won": 486,
+      "win_rate_pct": 9.9
+    },
+    {
+      "source": "Facebook Ads",
+      "total_leads": 4908,
+      "won": 489,
+      "win_rate_pct": 9.96
+    },
+    {
+      "source": "Other",
+      "total_leads": 4872,
+      "won": 464,
+      "win_rate_pct": 9.52
+    },
+    {
+      "source": "Networking Event",
+      "total_leads": 4870,
+      "won": 452,
+      "win_rate_pct": 9.28
+    },
+    {
+      "source": "LinkedIn Outreach",
+      "total_leads": 4825,
+      "won": 501,
+      "win_rate_pct": 10.38
+    }
+  ],
+  "kpi_06_won_to_lost_ratio": [
+    {
+      "source": "Referral",
+      "won": 529,
+      "lost": 455,
+      "ratio": 1.163
+    },
+    {
+      "source": "Content Marketing",
+      "won": 516,
+      "lost": 465,
+      "ratio": 1.11
+    },
+    {
+      "source": "Podcast",
+      "won": 549,
+      "lost": 502,
+      "ratio": 1.094
+    },
+    {
+      "source": "Partner Program",
+      "won": 541,
+      "lost": 509,
+      "ratio": 1.063
+    },
+    {
+      "source": "Webinars",
+      "won": 526,
+      "lost": 498,
+      "ratio": 1.056
+    },
+    {
+      "source": "Cold Email",
+      "won": 519,
+      "lost": 503,
+      "ratio": 1.032
+    },
+    {
+      "source": "Organic Search (SEO)",
+      "won": 502,
+      "lost": 490,
+      "ratio": 1.024
+    },
+    {
+      "source": "LinkedIn Outreach",
+      "won": 501,
+      "lost": 490,
+      "ratio": 1.022
+    },
+    {
+      "source": "Direct Traffic",
+      "won": 493,
+      "lost": 487,
+      "ratio": 1.012
+    },
+    {
+      "source": "Google Ads",
+      "won": 487,
+      "lost": 487,
+      "ratio": 1.0
+    },
+    {
+      "source": "Trade Show",
+      "won": 493,
+      "lost": 495,
+      "ratio": 0.996
+    },
+    {
+      "source": "Social Media",
+      "won": 483,
+      "lost": 488,
+      "ratio": 0.99
+    },
+    {
+      "source": "Retargeting Ads",
+      "won": 505,
+      "lost": 511,
+      "ratio": 0.988
+    },
+    {
+      "source": "Chatbot",
+      "won": 486,
+      "lost": 493,
+      "ratio": 0.986
+    },
+    {
+      "source": "Facebook Ads",
+      "won": 489,
+      "lost": 508,
+      "ratio": 0.963
+    },
+    {
+      "source": "Purchased List",
+      "won": 479,
+      "lost": 506,
+      "ratio": 0.947
+    },
+    {
+      "source": "Website Form",
+      "won": 471,
+      "lost": 509,
+      "ratio": 0.925
+    },
+    {
+      "source": "Cold Call",
+      "won": 508,
+      "lost": 556,
+      "ratio": 0.914
+    },
+    {
+      "source": "Networking Event",
+      "won": 452,
+      "lost": 506,
+      "ratio": 0.893
+    },
+    {
+      "source": "Other",
+      "won": 464,
+      "lost": 530,
+      "ratio": 0.875
+    }
+  ],
+  "kpi_07_lead_owner_performance": {
+    "unique_owners": 93012,
+    "owners_with_1_lead": 86357,
+    "owners_with_gte2_leads": 6655,
+    "max_leads_per_owner": 4,
+    "top_10_by_win_rate": [
+      {
+        "owner": "Lori Anthony",
+        "leads": 2,
+        "won": 2,
+        "win_rate_pct": 100.0
+      },
+      {
+        "owner": "Benjamin Mcconnell",
+        "leads": 2,
+        "won": 2,
+        "win_rate_pct": 100.0
+      },
+      {
+        "owner": "Kayla Braun",
+        "leads": 2,
+        "won": 2,
+        "win_rate_pct": 100.0
+      },
+      {
+        "owner": "Monique Perkins",
+        "leads": 2,
+        "won": 2,
+        "win_rate_pct": 100.0
+      },
+      {
+        "owner": "Drew Edwards",
+        "leads": 2,
+        "won": 2,
+        "win_rate_pct": 100.0
+      },
+      {
+        "owner": "Courtney Barron",
+        "leads": 2,
+        "won": 2,
+        "win_rate_pct": 100.0
+      },
+      {
+        "owner": "Alvin Wilson",
+        "leads": 2,
+        "won": 2,
+        "win_rate_pct": 100.0
+      },
+      {
+        "owner": "Jonathan Ponce",
+        "leads": 2,
+        "won": 2,
+        "win_rate_pct": 100.0
+      },
+      {
+        "owner": "Mitchell Harper",
+        "leads": 2,
+        "won": 2,
+        "win_rate_pct": 100.0
+      },
+      {
+        "owner": "Briana Mcdowell",
+        "leads": 2,
+        "won": 2,
+        "win_rate_pct": 100.0
+      }
+    ],
+    "win_rate_distribution": {
+      "mean": 10.17,
+      "median": 0.0,
+      "stdev": 21.06
+    }
+  },
+  "kpi_08_deal_stage_distribution": {
+    "Negotiation": {
+      "count": 10126,
+      "pct": 10.13
+    },
+    "Qualified": {
+      "count": 10109,
+      "pct": 10.11
+    },
+    "Re-engagement": {
+      "count": 10005,
+      "pct": 10.01
+    },
+    "Contacted": {
+      "count": 10000,
+      "pct": 10.0
+    },
+    "Closed Won": {
+      "count": 9993,
+      "pct": 9.99
+    },
+    "Closed Lost": {
+      "count": 9988,
+      "pct": 9.99
+    },
+    "New Lead": {
+      "count": 9984,
+      "pct": 9.98
+    },
+    "Proposal Sent": {
+      "count": 9952,
+      "pct": 9.95
+    },
+    "Disqualified": {
+      "count": 9945,
+      "pct": 9.95
+    },
+    "On Hold": {
+      "count": 9898,
+      "pct": 9.9
+    }
+  },
+  "kpi_09_funnel_dropoff": [
+    {
+      "stage": "New Lead",
+      "count": 9984,
+      "drop_from_prev_pct": 0.0
+    },
+    {
+      "stage": "Qualified",
+      "count": 10109,
+      "drop_from_prev_pct": -1.25
+    },
+    {
+      "stage": "Contacted",
+      "count": 10000,
+      "drop_from_prev_pct": 1.08
+    },
+    {
+      "stage": "Proposal Sent",
+      "count": 9952,
+      "drop_from_prev_pct": 0.48
+    },
+    {
+      "stage": "Negotiation",
+      "count": 10126,
+      "drop_from_prev_pct": -1.75
+    },
+    {
+      "stage": "Closed Won",
+      "count": 9993,
+      "drop_from_prev_pct": 1.31
+    }
+  ],
+  "kpi_10_notes_wordcount_by_outcome": {
+    "Won": {
+      "n": 9993,
+      "mean": 5.5023,
+      "median": 6,
+      "stdev": 1.4637,
+      "min": 3,
+      "max": 8
+    },
+    "Lost": {
+      "n": 19933,
+      "mean": 5.5056,
+      "median": 6,
+      "stdev": 1.4597,
+      "min": 3,
+      "max": 8
+    },
+    "Open": {
+      "n": 70074,
+      "mean": 5.4967,
+      "median": 6.0,
+      "stdev": 1.4603,
+      "min": 3,
+      "max": 8
+    }
+  },
+  "kpi_11_notes_sentiment_by_outcome": {
+    "Won": {
+      "n": 9993,
+      "mean": 0.0575,
+      "median": 0.0,
+      "stdev": 0.212,
+      "min": -0.8,
+      "max": 1.0,
+      "positive_pct": 25.4,
+      "neutral_pct": 63.89,
+      "negative_pct": 10.71
+    },
+    "Lost": {
+      "n": 19933,
+      "mean": 0.0646,
+      "median": 0.0,
+      "stdev": 0.216,
+      "min": -1.0,
+      "max": 1.0,
+      "positive_pct": 26.48,
+      "neutral_pct": 63.04,
+      "negative_pct": 10.48
+    },
+    "Open": {
+      "n": 70074,
+      "mean": 0.0621,
+      "median": 0.0,
+      "stdev": 0.214,
+      "min": -0.8,
+      "max": 1.0,
+      "positive_pct": 25.61,
+      "neutral_pct": 63.86,
+      "negative_pct": 10.53
+    }
+  },
+  "kpi_12_source_composite_score": [
+    {
+      "source": "Podcast",
+      "total_leads": 5134,
+      "won": 549,
+      "win_rate_pct": 10.69,
+      "composite_score": 1.0
+    },
+    {
+      "source": "Partner Program",
+      "total_leads": 5076,
+      "won": 541,
+      "win_rate_pct": 10.66,
+      "composite_score": 0.9288
+    },
+    {
+      "source": "Referral",
+      "total_leads": 4994,
+      "won": 529,
+      "win_rate_pct": 10.59,
+      "composite_score": 0.8144
+    },
+    {
+      "source": "Webinars",
+      "total_leads": 4979,
+      "won": 526,
+      "win_rate_pct": 10.56,
+      "composite_score": 0.785
+    },
+    {
+      "source": "Cold Email",
+      "total_leads": 5086,
+      "won": 519,
+      "win_rate_pct": 10.2,
+      "composite_score": 0.7101
+    },
+    {
+      "source": "Content Marketing",
+      "total_leads": 4935,
+      "won": 516,
+      "win_rate_pct": 10.46,
+      "composite_score": 0.6926
+    },
+    {
+      "source": "Cold Call",
+      "total_leads": 5032,
+      "won": 508,
+      "win_rate_pct": 10.1,
+      "composite_score": 0.6081
+    },
+    {
+      "source": "Retargeting Ads",
+      "total_leads": 5102,
+      "won": 505,
+      "win_rate_pct": 9.9,
+      "composite_score": 0.5767
+    },
+    {
+      "source": "Organic Search (SEO)",
+      "total_leads": 5113,
+      "won": 502,
+      "win_rate_pct": 9.82,
+      "composite_score": 0.5477
+    },
+    {
+      "source": "LinkedIn Outreach",
+      "total_leads": 4825,
+      "won": 501,
+      "win_rate_pct": 10.38,
+      "composite_score": 0.5461
+    },
+    {
+      "source": "Trade Show",
+      "total_leads": 5079,
+      "won": 493,
+      "win_rate_pct": 9.71,
+      "composite_score": 0.4601
+    },
+    {
+      "source": "Direct Traffic",
+      "total_leads": 4986,
+      "won": 493,
+      "win_rate_pct": 9.89,
+      "composite_score": 0.4591
+    },
+    {
+      "source": "Facebook Ads",
+      "total_leads": 4908,
+      "won": 489,
+      "win_rate_pct": 9.96,
+      "composite_score": 0.4182
+    },
+    {
+      "source": "Google Ads",
+      "total_leads": 5020,
+      "won": 487,
+      "win_rate_pct": 9.7,
+      "composite_score": 0.3978
+    },
+    {
+      "source": "Chatbot",
+      "total_leads": 4909,
+      "won": 486,
+      "win_rate_pct": 9.9,
+      "composite_score": 0.3894
+    },
+    {
+      "source": "Social Media",
+      "total_leads": 4996,
+      "won": 483,
+      "win_rate_pct": 9.67,
+      "composite_score": 0.3596
+    },
+    {
+      "source": "Purchased List",
+      "total_leads": 5015,
+      "won": 479,
+      "win_rate_pct": 9.55,
+      "composite_score": 0.3185
+    },
+    {
+      "source": "Website Form",
+      "total_leads": 5069,
+      "won": 471,
+      "win_rate_pct": 9.29,
+      "composite_score": 0.2419
+    },
+    {
+      "source": "Other",
+      "total_leads": 4872,
+      "won": 464,
+      "win_rate_pct": 9.52,
+      "composite_score": 0.1648
+    },
+    {
+      "source": "Networking Event",
+      "total_leads": 4870,
+      "won": 452,
+      "win_rate_pct": 9.28,
+      "composite_score": 0.0437
+    }
+  ]
+}

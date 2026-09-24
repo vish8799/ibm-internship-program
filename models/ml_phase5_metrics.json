@@ -1,0 +1,285 @@
+{
+  "dataset_info": {
+    "total_samples": 100000,
+    "positive_class_pct": 9.99,
+    "train_samples": 69999,
+    "val_samples": 15001,
+    "test_samples": 15000,
+    "split_seed": 42,
+    "cat_features": [
+      "source",
+      "source_group"
+    ],
+    "num_features": [
+      "notes_sentiment",
+      "notes_word_count",
+      "notes_has_text",
+      "source_tier",
+      "owner_freq",
+      "company_freq"
+    ],
+    "target": "is_won"
+  },
+  "feature_engineering_notes": {
+    "source_ohe": "One-hot encoded (20 levels)",
+    "source_group_ohe": "One-hot encoded (7 levels)",
+    "source_tier": "Ordinal 1/2/3 based on Phase-4 win-rate ranking",
+    "owner_freq": "Lead-owner frequency (count/total) \u2014 no target leakage",
+    "company_freq": "Company frequency (count/total) \u2014 no target leakage",
+    "notes_sentiment": "TextBlob polarity; near-zero signal confirmed in Phase 3",
+    "notes_word_count": "Token count; near-zero signal confirmed in Phase 3",
+    "notes_has_text": "Binary: always 1 in this dataset (all Notes populated)",
+    "dropped_leakage": [
+      "deal_stage",
+      "stage_ordinal",
+      "target_multiclass",
+      "outcome_3class",
+      "is_closed"
+    ],
+    "dropped_identifiers": [
+      "account_id",
+      "index",
+      "website"
+    ],
+    "dropped_pii": [
+      "lead_owner (raw)",
+      "company (raw) \u2014 replaced by freq enc"
+    ]
+  },
+  "models": {
+    "Logistic Regression": {
+      "model_path": "models\\logistic_regression_model.pkl",
+      "train_metrics": {
+        "split": "train",
+        "n_samples": 69999,
+        "accuracy": 0.5062,
+        "precision": 0.1041,
+        "recall": 0.5179,
+        "f1": 0.1733,
+        "roc_auc": 0.5131,
+        "pr_auc": 0.1042,
+        "confusion_matrix": [
+          [
+            31812,
+            31192
+          ],
+          [
+            3372,
+            3623
+          ]
+        ]
+      },
+      "val_metrics": {
+        "split": "val",
+        "n_samples": 15001,
+        "accuracy": 0.5057,
+        "precision": 0.1039,
+        "recall": 0.5177,
+        "f1": 0.1731,
+        "roc_auc": 0.5113,
+        "pr_auc": 0.1053,
+        "confusion_matrix": [
+          [
+            6810,
+            6692
+          ],
+          [
+            723,
+            776
+          ]
+        ]
+      },
+      "test_metrics": {
+        "split": "test",
+        "n_samples": 15000,
+        "accuracy": 0.5016,
+        "precision": 0.1047,
+        "recall": 0.5284,
+        "f1": 0.1748,
+        "roc_auc": 0.5166,
+        "pr_auc": 0.1039,
+        "confusion_matrix": [
+          [
+            6732,
+            6769
+          ],
+          [
+            707,
+            792
+          ]
+        ]
+      },
+      "cross_validation": {
+        "folds": 5,
+        "scores": [
+          0.4946,
+          0.5078,
+          0.4961,
+          0.5059,
+          0.497
+        ],
+        "mean": 0.5003,
+        "std": 0.0054
+      },
+      "hyperparameters": "LogisticRegression(C=0.5, class_weight='balanced', max_iter=2000,\n                   random_state=42)"
+    },
+    "Random Forest": {
+      "model_path": "models\\random_forest_model.pkl",
+      "train_metrics": {
+        "split": "train",
+        "n_samples": 69999,
+        "accuracy": 0.6185,
+        "precision": 0.1485,
+        "recall": 0.595,
+        "f1": 0.2376,
+        "roc_auc": 0.6525,
+        "pr_auc": 0.1693,
+        "confusion_matrix": [
+          [
+            39132,
+            23872
+          ],
+          [
+            2833,
+            4162
+          ]
+        ]
+      },
+      "val_metrics": {
+        "split": "val",
+        "n_samples": 15001,
+        "accuracy": 0.582,
+        "precision": 0.1003,
+        "recall": 0.3996,
+        "f1": 0.1604,
+        "roc_auc": 0.505,
+        "pr_auc": 0.1033,
+        "confusion_matrix": [
+          [
+            8131,
+            5371
+          ],
+          [
+            900,
+            599
+          ]
+        ]
+      },
+      "test_metrics": {
+        "split": "test",
+        "n_samples": 15000,
+        "accuracy": 0.5737,
+        "precision": 0.1001,
+        "recall": 0.4089,
+        "f1": 0.1609,
+        "roc_auc": 0.5061,
+        "pr_auc": 0.1021,
+        "confusion_matrix": [
+          [
+            7992,
+            5509
+          ],
+          [
+            886,
+            613
+          ]
+        ]
+      },
+      "cross_validation": {
+        "folds": 5,
+        "scores": [
+          0.5131,
+          0.5046,
+          0.4922,
+          0.5049,
+          0.5165
+        ],
+        "mean": 0.5063,
+        "std": 0.0084
+      },
+      "hyperparameters": "RandomForestClassifier(class_weight='balanced', max_depth=10,\n                       min_samples_leaf=20, n_estimators=300, n_jobs=-1,\n                       random_state=42)"
+    },
+    "LightGBM": {
+      "model_path": "models\\lightgbm_model.pkl",
+      "train_metrics": {
+        "split": "train",
+        "n_samples": 69999,
+        "accuracy": 0.6083,
+        "precision": 0.1533,
+        "recall": 0.6456,
+        "f1": 0.2478,
+        "roc_auc": 0.6888,
+        "pr_auc": 0.2186,
+        "confusion_matrix": [
+          [
+            38061,
+            24943
+          ],
+          [
+            2479,
+            4516
+          ]
+        ]
+      },
+      "val_metrics": {
+        "split": "val",
+        "n_samples": 15001,
+        "accuracy": 0.5654,
+        "precision": 0.0983,
+        "recall": 0.4096,
+        "f1": 0.1585,
+        "roc_auc": 0.4963,
+        "pr_auc": 0.0993,
+        "confusion_matrix": [
+          [
+            7867,
+            5635
+          ],
+          [
+            885,
+            614
+          ]
+        ]
+      },
+      "test_metrics": {
+        "split": "test",
+        "n_samples": 15000,
+        "accuracy": 0.5617,
+        "precision": 0.0994,
+        "recall": 0.4203,
+        "f1": 0.1608,
+        "roc_auc": 0.4998,
+        "pr_auc": 0.1001,
+        "confusion_matrix": [
+          [
+            7795,
+            5706
+          ],
+          [
+            869,
+            630
+          ]
+        ]
+      },
+      "cross_validation": {
+        "folds": 5,
+        "scores": [
+          0.5129,
+          0.5025,
+          0.5032,
+          0.5115,
+          0.5126
+        ],
+        "mean": 0.5085,
+        "std": 0.0047
+      },
+      "hyperparameters": "LGBMClassifier(class_weight='balanced', learning_rate=0.05, max_depth=6,\n               n_estimators=400, n_jobs=-1, random_state=42, verbose=-1)"
+    }
+  },
+  "best_model": {
+    "name": "Logistic Regression",
+    "val_roc_auc": 0.5113,
+    "path": "models\\best_model.pkl",
+    "selection_criterion": "Highest ROC-AUC on validation set"
+  }
+}

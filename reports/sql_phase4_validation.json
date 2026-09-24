@@ -1,0 +1,134 @@
+{
+  "total_checks": 18,
+  "passed": 18,
+  "failed": 0,
+  "all_passed": true,
+  "checks": [
+    {
+      "check": "Overall win rate (%)",
+      "expected": 9.99,
+      "got": 9.99,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Total leads",
+      "expected": 100000,
+      "got": 100000,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Closed Won count",
+      "expected": 9993,
+      "got": 9993,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Closed rate (%)",
+      "expected": 29.93,
+      "got": 29.93,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Top source name",
+      "expected": "Podcast",
+      "got": "Podcast",
+      "passed": true,
+      "diff": 0
+    },
+    {
+      "check": "Podcast win rate (%)",
+      "expected": 10.69,
+      "got": 10.69,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Podcast total leads",
+      "expected": 5134,
+      "got": 5134,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Podcast closed won",
+      "expected": 549,
+      "got": 549,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Bottom source name",
+      "expected": "Networking Event",
+      "got": "Networking Event",
+      "passed": true,
+      "diff": 0
+    },
+    {
+      "check": "Networking Event win rate (%)",
+      "expected": 9.28,
+      "got": 9.28,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Networking Event total leads",
+      "expected": 4870,
+      "got": 4870,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Networking Event closed won",
+      "expected": 452,
+      "got": 452,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Referral/Partner win rate (%)",
+      "expected": 10.63,
+      "got": 10.63,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Referral/Partner total leads",
+      "expected": 10070,
+      "got": 10070,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Referral/Partner closed won",
+      "expected": 1070,
+      "got": 1070,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Best source group name",
+      "expected": "Referral / Partner",
+      "got": "Referral / Partner",
+      "passed": true,
+      "diff": 0
+    },
+    {
+      "check": "Sentiment mean (Won)",
+      "expected": 0.0575,
+      "got": 0.0575,
+      "passed": true,
+      "diff": 0.0
+    },
+    {
+      "check": "Sentiment mean (Lost)",
+      "expected": 0.0646,
+      "got": 0.0646,
+      "passed": true,
+      "diff": 0.0
+    }
+  ]
+}

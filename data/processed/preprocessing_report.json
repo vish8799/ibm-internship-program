@@ -1,0 +1,218 @@
+{
+  "pipeline": "data_preprocessing.py",
+  "raw_file": "leads-100000.csv",
+  "outputs": [
+    "data/processed/cleaned_leads.csv",
+    "data/processed/pii_vault.csv"
+  ],
+  "steps": {
+    "1_load": {
+      "rows_loaded": 100000,
+      "columns": [
+        "Index",
+        "Account Id",
+        "Lead Owner",
+        "First Name",
+        "Last Name",
+        "Company",
+        "Phone 1",
+        "Phone 2",
+        "Email 1",
+        "Email 2",
+        "Website",
+        "Source",
+        "Deal Stage",
+        "Notes"
+      ],
+      "shape_before": [
+        100000,
+        14
+      ]
+    },
+    "2_missing": {
+      "null_counts_per_col": {
+        "Index": 0,
+        "Account Id": 0,
+        "Lead Owner": 0,
+        "First Name": 0,
+        "Last Name": 0,
+        "Company": 0,
+        "Phone 1": 0,
+        "Phone 2": 0,
+        "Email 1": 0,
+        "Email 2": 0,
+        "Website": 0,
+        "Source": 0,
+        "Deal Stage": 0,
+        "Notes": 0
+      },
+      "total_nulls": 0,
+      "imputation_applied": "None required \u2014 zero missing values found"
+    },
+    "3_deduplication": {
+      "duplicate_account_ids": 0,
+      "fullrow_duplicates_removed": 0,
+      "rows_after_dedup": 100000,
+      "decision": "Full-row duplicates removed; duplicate Account IDs logged (none found in this dataset)"
+    },
+    "4_standardisation": {
+      "source_values_normalised": 0,
+      "stage_values_normalised": 0,
+      "invalid_source_values": [],
+      "invalid_stage_values": [],
+      "whitespace_stripped": true,
+      "rules": {
+        "source": "Lowercased key lookup -> canonical title-case value",
+        "stage": "Lowercased key lookup -> canonical title-case value"
+      }
+    },
+    "5_pii_separation": {
+      "pii_columns_isolated": [
+        "First Name",
+        "Last Name",
+        "Phone 1",
+        "Phone 2",
+        "Email 1",
+        "Email 2"
+      ],
+      "pii_file": "data/processed/pii_vault.csv",
+      "key_for_linkage": [
+        "Account Id",
+        "Index"
+      ],
+      "retained_in_clean": [
+        "Index",
+        "Account Id",
+        "Lead Owner",
+        "Company",
+        "Website",
+        "Source",
+        "Deal Stage",
+        "Notes"
+      ],
+      "pii_rows_written": 100000
+    },
+    "6_target_encoding": {
+      "columns_added": {
+        "is_won": "1=Closed Won, 0=all others",
+        "target_multiclass": "0=New Lead,1=Qualified,2=Contacted,3=Proposal Sent,4=Negotiation,5=Closed Won,6=Closed Lost,7=On Hold,8=Disqualified,9=Re-engagement",
+        "outcome_3class": "Won / Lost / Open"
+      },
+      "is_won_distribution": {
+        "positive_1": 9993,
+        "negative_0": 90007,
+        "positive_pct": 9.99
+      },
+      "stage_distribution": {
+        "Closed Lost": 9988,
+        "Proposal Sent": 9952,
+        "On Hold": 9898,
+        "Qualified": 10109,
+        "Closed Won": 9993,
+        "Negotiation": 10126,
+        "Contacted": 10000,
+        "Re-engagement": 10005,
+        "Disqualified": 9945,
+        "New Lead": 9984
+      }
+    },
+    "7_derived_features": {
+      "source_group_mapping": {
+        "Google Ads": "Paid Ads",
+        "Facebook Ads": "Paid Ads",
+        "Retargeting Ads": "Paid Ads",
+        "Cold Call": "Outbound",
+        "Cold Email": "Outbound",
+        "LinkedIn Outreach": "Outbound",
+        "Purchased List": "Outbound",
+        "Organic Search (SEO)": "Inbound",
+        "Direct Traffic": "Inbound",
+        "Website Form": "Inbound",
+        "Content Marketing": "Inbound",
+        "Chatbot": "Inbound",
+        "Trade Show": "Events",
+        "Networking Event": "Events",
+        "Webinars": "Events",
+        "Podcast": "Events",
+        "Referral": "Referral / Partner",
+        "Partner Program": "Referral / Partner",
+        "Social Media": "Social Media",
+        "Other": "Other"
+      },
+      "stage_ordinal_mapping": {
+        "New Lead": 0,
+        "Re-engagement": 1,
+        "Qualified": 2,
+        "Contacted": 3,
+        "Proposal Sent": 4,
+        "Negotiation": 5,
+        "On Hold": 6,
+        "Closed Won": 7,
+        "Closed Lost": 8,
+        "Disqualified": 9
+      },
+      "textblob_available": true
+    }
+  },
+  "validation": {
+    "shape_before": [
+      100000,
+      14
+    ],
+    "shape_after": [
+      100000,
+      16
+    ],
+    "nulls_in_raw": 0,
+    "nulls_in_cleaned": 0,
+    "rows_removed_dedup": 0,
+    "null_counts_cleaned": {
+      "index": 0,
+      "account_id": 0,
+      "lead_owner": 0,
+      "company": 0,
+      "website": 0,
+      "source": 0,
+      "source_group": 0,
+      "deal_stage": 0,
+      "is_won": 0,
+      "is_closed": 0,
+      "outcome_3class": 0,
+      "target_multiclass": 0,
+      "stage_ordinal": 0,
+      "notes_sentiment": 0,
+      "notes_word_count": 0,
+      "notes_has_text": 0
+    }
+  },
+  "output_schema": {
+    "index": "INT  \u2014 original row index from raw file; unique identifier",
+    "account_id": "STR  \u2014 unique CRM account ID; linkage key to pii_vault.csv",
+    "lead_owner": "STR  \u2014 assigned sales representative name",
+    "company": "STR  \u2014 company name (high cardinality, 71,973 unique)",
+    "website": "STR  \u2014 company website URL (50,367 unique)",
+    "source": "CAT  \u2014 standardised lead acquisition channel (20 values)",
+    "source_group": "CAT  \u2014 channel category bucket (7 values)",
+    "deal_stage": "CAT  \u2014 standardised CRM stage (10 values)",
+    "is_won": "INT  \u2014 binary target: 1=Closed Won, 0=all others",
+    "is_closed": "INT  \u2014 binary: 1=Closed Won|Closed Lost|Disqualified",
+    "outcome_3class": "CAT  \u2014 3-class target: Won / Lost / Open",
+    "target_multiclass": "INT  \u2014 10-class ordinal: 0=New Lead ... 9=Re-engagement",
+    "stage_ordinal": "INT  \u2014 same as target_multiclass (funnel position)",
+    "notes_sentiment": "FLOAT\u2014 TextBlob polarity [-1.0, +1.0]; 0.0 if no text",
+    "notes_word_count": "INT  \u2014 word count of Notes field",
+    "notes_has_text": "INT  \u2014 1 if Notes is non-empty, 0 otherwise"
+  },
+  "cleaning_rules": {
+    "duplicates": "Full-row duplicates removed (keep first). Duplicate Account IDs logged.",
+    "missing_values": "None found \u2014 no imputation applied.",
+    "source_std": "Lowercase key lookup -> 20 canonical title-case values.",
+    "stage_std": "Lowercase key lookup -> 10 canonical title-case values.",
+    "pii": "First/Last Name, Phone 1/2, Email 1/2 moved to pii_vault.csv. Linkage via Account Id.",
+    "target_binary": "is_won: 1=Closed Won, 0=all others.",
+    "target_multiclass": "target_multiclass: integer 0-9 per STAGE_ORDINAL mapping.",
+    "target_3class": "outcome_3class: Won|Lost|Open based on LOST_STAGES set.",
+    "whitespace": "All fields stripped of leading/trailing whitespace.",
+    "pii_retained": "Account Id and Index retained in cleaned dataset as linkage keys."
+  }
+}

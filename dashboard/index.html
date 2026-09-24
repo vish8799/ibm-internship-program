@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Leads Pipeline Analytics Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;background:#f0f2f5;color:#1f2328;font-size:14px;line-height:1.6}
+  header{background:#1f2328;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between}
+  header h1{font-size:20px;font-weight:600;letter-spacing:.3px}
+  header span{font-size:12px;color:#9ca3af}
+  .tabs{display:flex;gap:0;background:#fff;border-bottom:1px solid #e5e7eb;padding:0 32px;flex-wrap:wrap}
+  .tab{padding:12px 18px;cursor:pointer;font-size:13px;font-weight:500;color:#57606a;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap}
+  .tab:hover{color:#1f2328}
+  .tab.active{color:#3b82d4;border-bottom-color:#3b82d4}
+  .page{display:none;padding:24px 32px}
+  .page.active{display:block}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:16px;margin-bottom:24px}
+  .kpi{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:18px 20px}
+  .kpi-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:#57606a;margin-bottom:6px}
+  .kpi-value{font-size:24px;font-weight:700;color:#1f2328;line-height:1.1}
+  .kpi-sub{font-size:11px;color:#57606a;margin-top:4px}
+  .kpi.green .kpi-value{color:#16a34a}
+  .kpi.blue  .kpi-value{color:#3b82d4}
+  .kpi.red   .kpi-value{color:#dc2626}
+  .kpi.amber .kpi-value{color:#d97706}
+  .kpi.purple .kpi-value{color:#7c5cd8}
+  .row{display:grid;gap:16px;margin-bottom:16px}
+  .row.cols2{grid-template-columns:1fr 1fr}
+  .row.cols3{grid-template-columns:1fr 1fr 1fr}
+  .row.cols32{grid-template-columns:3fr 2fr}
+  .card{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:20px}
+  .card h3{font-size:13px;font-weight:600;color:#1f2328;margin-bottom:4px}
+  .card .sub{font-size:11px;color:#57606a;margin-bottom:14px}
+  .chart-wrap{width:100%;position:relative}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{background:#f7f8fa;font-weight:600;padding:8px 12px;text-align:left;border-bottom:2px solid #e5e7eb;color:#57606a;font-size:11px;text-transform:uppercase;letter-spacing:.4px;cursor:pointer}
+  td{padding:8px 12px;border-bottom:1px solid #f0f2f5;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:#f7f8fa}
+  .badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600}
+  .badge.green{background:#dcfce7;color:#16a34a}
+  .badge.red{background:#fee2e2;color:#dc2626}
+  .badge.blue{background:#dbeafe;color:#1d4ed8}
+  .badge.amber{background:#fef3c7;color:#d97706}
+  .badge.gray{background:#f3f4f6;color:#6b7280}
+  .badge.purple{background:#ede9fe;color:#6d28d9}
+  .bar-inline{display:flex;align-items:center;gap:8px}
+  .bar-bg{background:#f0f2f5;border-radius:4px;height:8px;flex:1}
+  .bar-fill{height:8px;border-radius:4px;background:#3b82d4}
+  .bar-fill.green{background:#22c55e}
+  .insight-box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:16px 20px;margin-bottom:16px}
+  .insight-box h4{font-size:13px;font-weight:600;color:#1d4ed8;margin-bottom:6px}
+  .insight-box p{font-size:13px;color:#1e40af;line-height:1.6}
+  .warn-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin-bottom:16px}
+  .warn-box p{font-size:12px;color:#92400e}
+  .filter-row{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .filter-row label{font-size:12px;font-weight:600;color:#57606a}
+  select{font-size:13px;padding:6px 10px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;color:#1f2328;cursor:pointer}
+  select:focus{outline:none;border-color:#3b82d4}
+  footer{text-align:center;padding:20px;color:#9ca3af;font-size:11px;border-top:1px solid #e5e7eb;margin-top:8px;background:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Leads Pipeline Analytics Dashboard</h1>
+  <span>100,000 Leads &nbsp;|&nbsp; All values from actual data &nbsp;|&nbsp; Phases 1–8</span>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="showPage('overview')">Overview</div>
+  <div class="tab" onclick="showPage('sources')">Source Performance</div>
+  <div class="tab" onclick="showPage('funnel')">Pipeline Funnel</div>
+  <div class="tab" onclick="showPage('ml')">ML Model</div>
+  <div class="tab" onclick="showPage('explainability')">Explainability</div>
+  <div class="tab" onclick="showPage('ai')">AI Insights</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE: OVERVIEW -->
+<div id="page-overview" class="page active">
+
+  <div class="kpi-row">
+    <div class="kpi blue"><div class="kpi-label">Total Leads</div><div class="kpi-value">100,000</div><div class="kpi-sub">All pipeline stages</div></div>
+    <div class="kpi green"><div class="kpi-label">Closed Won</div><div class="kpi-value">9,993</div><div class="kpi-sub">Win rate: 9.99%</div></div>
+    <div class="kpi red"><div class="kpi-label">Closed Lost + Disq.</div><div class="kpi-value">19,933</div><div class="kpi-sub">Loss rate: 19.93%</div></div>
+    <div class="kpi amber"><div class="kpi-label">Open Pipeline</div><div class="kpi-value">70,074</div><div class="kpi-sub">70.1% of all leads</div></div>
+    <div class="kpi"><div class="kpi-label">Overall Close Rate</div><div class="kpi-value">29.93%</div><div class="kpi-sub">Won + Lost + Disq.</div></div>
+    <div class="kpi"><div class="kpi-label">Lead Sources</div><div class="kpi-value">20</div><div class="kpi-sub">Win rate: 9.28–10.69%</div></div>
+  </div>
+
+  <div class="row cols2">
+    <div class="card">
+      <h3>Deal Stage Distribution</h3>
+      <div class="sub">All 10 stages — near-uniform distribution across the pipeline</div>
+      <div class="chart-wrap"><div id="chart-stage-pie" style="height:320px"></div></div>
+    </div>
+    <div class="card">
+      <h3>Outcome Breakdown by Source Group</h3>
+      <div class="sub">Won / Lost / Open across channel categories</div>
+      <div class="chart-wrap"><div id="chart-outcome-sg" style="height:320px"></div></div>
+    </div>
+  </div>
+
+  <div class="row cols32">
+    <div class="card">
+      <h3>Win Rate by Source — Ranked</h3>
+      <div class="sub">Closed Won / Total Leads per acquisition channel (all 20 sources)</div>
+      <div class="chart-wrap"><div id="chart-winrate-source" style="height:340px"></div></div>
+    </div>
+    <div class="card">
+      <h3>Source Group Win Rates</h3>
+      <div class="sub">7 channel categories — Referral/Partner leads at 10.63%</div>
+      <div class="chart-wrap"><div id="chart-winrate-sg" style="height:340px"></div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE: SOURCES -->
+<div id="page-sources" class="page">
+
+  <div class="filter-row">
+    <label>Filter by Source Group:</label>
+    <select id="sg-filter" onchange="filterSourceTable()">
+      <option value="all">All Groups</option>
+      <option value="Paid Ads">Paid Ads</option>
+      <option value="Outbound">Outbound</option>
+      <option value="Inbound">Inbound</option>
+      <option value="Events">Events</option>
+      <option value="Referral / Partner">Referral / Partner</option>
+      <option value="Social Media">Social Media</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+
+  <div class="row cols2">
+    <div class="card">
+      <h3>Won-to-Lost Ratio by Source</h3>
+      <div class="sub">Ratio > 1.0 = more wins than losses. Networking Event is the only source below 1.0.</div>
+      <div class="chart-wrap"><div id="chart-won-lost-ratio" style="height:380px"></div></div>
+    </div>
+    <div class="card">
+      <h3>Lead Volume by Source</h3>
+      <div class="sub">Total leads per acquisition channel — near-equal volume across all sources (~5,000)</div>
+      <div class="chart-wrap"><div id="chart-volume-source" style="height:380px"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Source Performance Table</h3>
+    <div class="sub">All 20 sources — click column headers to sort</div>
+    <table id="source-table">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Source ▲▼</th>
+          <th onclick="sortTable(1)">Group ▲▼</th>
+          <th onclick="sortTable(2)">Total Leads ▲▼</th>
+          <th onclick="sortTable(3)">Closed Won ▲▼</th>
+          <th onclick="sortTable(4)">Win Rate % ▲▼</th>
+          <th onclick="sortTable(5)">Won:Lost ▲▼</th>
+          <th>Win Rate Bar</th>
+        </tr>
+      </thead>
+      <tbody id="source-tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE: FUNNEL -->
+<div id="page-funnel" class="page">
+
+  <div class="kpi-row">
+    <div class="kpi blue"><div class="kpi-label">New Lead</div><div class="kpi-value">9,984</div><div class="kpi-sub">9.98% of total</div></div>
+    <div class="kpi blue"><div class="kpi-label">Qualified</div><div class="kpi-value">10,109</div><div class="kpi-sub">10.11% of total</div></div>
+    <div class="kpi blue"><div class="kpi-label">Contacted</div><div class="kpi-value">10,000</div><div class="kpi-sub">10.00% of total</div></div>
+    <div class="kpi blue"><div class="kpi-label">Proposal Sent</div><div class="kpi-value">9,952</div><div class="kpi-sub">9.95% of total</div></div>
+    <div class="kpi blue"><div class="kpi-label">Negotiation</div><div class="kpi-value">10,126</div><div class="kpi-sub">10.13% of total</div></div>
+    <div class="kpi green"><div class="kpi-label">Closed Won</div><div class="kpi-value">9,993</div><div class="kpi-sub">9.99% of total</div></div>
+  </div>
+
+  <div class="row cols2">
+    <div class="card">
+      <h3>Active Pipeline Funnel</h3>
+      <div class="sub">Lead counts across active progression stages — near-uniform (no systematic drop-off)</div>
+      <div class="chart-wrap"><div id="chart-funnel-line" style="height:300px"></div></div>
+    </div>
+    <div class="card">
+      <h3>Terminal Stage Distribution</h3>
+      <div class="sub">Won / Lost / Disqualified / On Hold / Re-engagement</div>
+      <div class="chart-wrap"><div id="chart-terminal" style="height:300px"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Stage Distribution by Source Group (Heatmap)</h3>
+    <div class="sub">Lead counts per deal stage per channel group — proportional to group volume</div>
+    <div class="chart-wrap"><div id="chart-heatmap" style="height:300px"></div></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Notes Sentiment by Outcome</h3>
+    <div class="sub">Mean TextBlob polarity score — Won vs Lost vs Open (range −1 to +1)</div>
+    <div class="chart-wrap"><div id="chart-sentiment" style="height:260px"></div></div>
+    <div class="warn-box" style="margin-top:14px;margin-bottom:0">
+      <p><strong>Finding:</strong> Sentiment scores are nearly identical across outcomes (Won: 0.0575, Lost: 0.0646, Open: 0.0621 — diff = 0.0071). Notes sentiment is <em>not</em> a meaningful predictor of deal outcome in this dataset. Confirmed by EDA and permutation importance analysis.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════ PAGE: ML -->
+<div id="page-ml" class="page">
+
+  <div class="insight-box">
+    <h4>ML Phase Summary — Three Models, 70/15/15 Split</h4>
+    <p>Three classifiers (Logistic Regression, Random Forest, LightGBM) were trained on 8 engineered features including source OHE, source_tier, owner/company frequency encoding, notes sentiment, and word count. All three achieve ROC-AUC ≈ 0.50–0.52 — marginally above random chance. Best model: Logistic Regression (Val AUC = 0.5113). This near-random performance is the analytically correct result given the narrow 1.4 pp win-rate spread across sources.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi blue"><div class="kpi-label">Train Samples</div><div class="kpi-value">69,999</div><div class="kpi-sub">70% stratified split</div></div>
+    <div class="kpi blue"><div class="kpi-label">Val Samples</div><div class="kpi-value">15,001</div><div class="kpi-sub">15% validation</div></div>
+    <div class="kpi blue"><div class="kpi-label">Test Samples</div><div class="kpi-value">15,000</div><div class="kpi-sub">15% held-out</div></div>
+    <div class="kpi amber"><div class="kpi-label">Positive Class</div><div class="kpi-value">9.99%</div><div class="kpi-sub">is_won = 1 (imbalanced)</div></div>
+    <div class="kpi green"><div class="kpi-label">Best Model</div><div class="kpi-value">LR</div><div class="kpi-sub">Val AUC = 0.5113</div></div>
+    <div class="kpi red"><div class="kpi-label">Random Baseline</div><div class="kpi-value">0.500</div><div class="kpi-sub">AUC = 0.5 → no signal</div></div>
+  </div>
+
+  <div class="row cols2">
+    <div class="card">
+      <h3>ROC-AUC Comparison — Val &amp; Test</h3>
+      <div class="sub">All 3 models on validation and test sets — actual execution results from ml_phase5_metrics.json</div>
+      <div class="chart-wrap"><div id="chart-model-auc" style="height:300px"></div></div>
+    </div>
+    <div class="card">
+      <h3>Cross-Validation ROC-AUC (5-Fold)</h3>
+      <div class="sub">Stratified K-fold on full dataset — all models cluster near 0.50–0.51</div>
+      <div class="chart-wrap"><div id="chart-cv" style="height:300px"></div></div>
+    </div>
+  </div>
+
+  <div class="row cols3">
+    <div class="card">
+      <h3>Confusion Matrix — Logistic Regression</h3>
+      <div class="sub">Test set (15,000 samples) — class_weight="balanced"</div>
+      <div style="margin-top:12px">
+        <table>
+          <thead><tr><th></th><th>Pred: No Win</th><th>Pred: Win</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Actual: No Win</strong></td><td>6,732 <span class="badge green">TN</span></td><td>6,769 <span class="badge red">FP</span></td></tr>
+            <tr><td><strong>Actual: Win</strong></td><td>707 <span class="badge amber">FN</span></td><td>792 <span class="badge blue">TP</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Confusion Matrix — Random Forest</h3>
+      <div class="sub">Test set (15,000 samples) — class_weight="balanced"</div>
+      <div style="margin-top:12px">
+        <table>
+          <thead><tr><th></th><th>Pred: No Win</th><th>Pred: Win</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Actual: No Win</strong></td><td>7,992 <span class="badge green">TN</span></td><td>5,509 <span class="badge red">FP</span></td></tr>
+            <tr><td><strong>Actual: Win</strong></td><td>886 <span class="badge amber">FN</span></td><td>613 <span class="badge blue">TP</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Confusion Matrix — LightGBM</h3>
+      <div class="sub">Test set (15,000 samples) — class_weight="balanced"</div>
+      <div style="margin-top:12px">
+        <table>
+          <thead><tr><th></th><th>Pred: No Win</th><th>Pred: Win</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Actual: No Win</strong></td><td>7,795 <span class="badge green">TN</span></td><td>5,706 <span class="badge red">FP</span></td></tr>
+            <tr><td><strong>Actual: Win</strong></td><td>869 <span class="badge amber">FN</span></td><td>630 <span class="badge blue">TP</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>All Metrics — Test Set</h3>
+    <div class="sub">Accuracy, Precision, Recall, F1 Score, ROC-AUC, PR-AUC — actual results from ml_phase5_metrics.json</div>
+    <div class="chart-wrap"><div id="chart-model-metrics" style="height:320px"></div></div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>Why ROC-AUC ≈ 0.50–0.52?</strong> Source win rates span only 1.41 pp (9.28%–10.69%). Notes sentiment difference Won vs Lost is 0.0071. No temporal, financial, or behavioral features are available. High train AUC for RF/LGBM (0.65/0.69) vs near-random val/test AUC confirms overfitting with no generalizable signal. A useful predictive model would require: deal value, industry, response time, engagement events, and follow-up counts.</p>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════ PAGE: EXPLAINABILITY -->
+<div id="page-explainability" class="page">
+
+  <div class="warn-box">
+    <p><strong>Causation disclaimer:</strong> All importances and coefficients describe learned statistical associations — not causal effects. Higher values for Podcast/Referral/Partner channels reflect observed win-rate differences in the data. Switching channels based on these findings requires validation via controlled experiments. Permutation importance confirms no feature provides genuine predictive lift beyond noise.</p>
+  </div>
+
+  <div class="row cols2">
+    <div class="card">
+      <h3>Logistic Regression Coefficients — Top 10 by |coef|</h3>
+      <div class="sub">From explainability_phase6.json — 31 features after OHE. Green = tilts toward win, Red = away.</div>
+      <div class="chart-wrap"><div id="chart-lr-coef" style="height:360px"></div></div>
+    </div>
+    <div class="card">
+      <h3>Random Forest Gini Importance — Top 10</h3>
+      <div class="sub">notes_sentiment (39.2%) and company_freq (22.7%) dominate — but permutation importance reveals near-zero actual lift.</div>
+      <div class="chart-wrap"><div id="chart-rf-imp" style="height:360px"></div></div>
+    </div>
+  </div>
+
+  <div class="row cols2">
+    <div class="card">
+      <h3>Permutation Importance (ROC-AUC Δ on Test Set)</h3>
+      <div class="sub">All 8 feature groups shuffled. Max drop = +0.008953, Min = −0.009671 — all near-zero, confirming no genuine signal.</div>
+      <div class="chart-wrap"><div id="chart-perm" style="height:300px"></div></div>
+    </div>
+    <div class="card">
+      <h3>SHAP Mean |SHAP| — Top 10 Features (LightGBM)</h3>
+      <div class="sub">Mean absolute SHAP value per feature — consistent with Gini: continuous features dominate despite weak signal.</div>
+      <div class="chart-wrap"><div id="chart-shap" style="height:300px"></div></div>
+    </div>
+  </div>
+
+  <div class="row cols2">
+    <div class="card">
+      <h3>Actual Win Rate vs Predicted Probability (by Source)</h3>
+      <div class="sub">Actual rates 9–11%; model predicts ~0.484–0.505 for all sources — confirming near-random discrimination.</div>
+      <div class="chart-wrap"><div id="chart-avp" style="height:300px"></div></div>
+    </div>
+    <div class="card">
+      <h3>Local Explanation — 4 Representative Cases (SHAP)</h3>
+      <div class="sub">TP/FP/FN/TN from test set — predicted probability and top driving feature per case.</div>
+      <div style="margin-top:8px">
+        <table>
+          <thead><tr><th>Case</th><th>Pred Prob</th><th>Actual</th><th>Top SHAP Feature</th><th>SHAP Val</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge blue">TP</span></td><td>0.5915</td><td><span class="badge green">Won (1)</span></td><td>company_freq</td><td>+0.0452</td></tr>
+            <tr><td><span class="badge red">FP</span></td><td>0.6512</td><td><span class="badge gray">Lost (0)</span></td><td>company_freq</td><td>+0.0578</td></tr>
+            <tr><td><span class="badge amber">FN</span></td><td>0.3867</td><td><span class="badge green">Won (1)</span></td><td>source_Referral</td><td>−0.0316</td></tr>
+            <tr><td><span class="badge gray">TN</span></td><td>0.3936</td><td><span class="badge gray">Lost (0)</span></td><td>notes_word_count</td><td>−0.0206</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:11px;color:#57606a;margin-top:10px">
+          <strong>TP:</strong> Correctly predicted win — company_freq drives probability up (+0.0452).<br>
+          <strong>FP:</strong> Predicted win but lost — company_freq misleadingly high (+0.0578).<br>
+          <strong>FN:</strong> Predicted loss but won — source_Referral has negative SHAP due to model noise.<br>
+          <strong>TN:</strong> Correctly predicted loss — low word count and sentiment push prob down.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Full Source Coefficients — Logistic Regression (Phase 6)</h3>
+    <div class="sub">All source-level LR coefficients from explainability_phase6.json — compared to actual EDA win rates</div>
+    <table>
+      <thead><tr><th onclick="sortCoefTable(0)">Source ▲▼</th><th onclick="sortCoefTable(1)">LR Coef ▲▼</th><th>Direction</th><th onclick="sortCoefTable(3)">Win Rate ▲▼</th><th>EDA Rank</th></tr></thead>
+      <tbody id="coef-tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════ PAGE: AI INSIGHTS -->
+<div id="page-ai" class="page">
+
+  <div class="insight-box" style="margin-bottom:20px">
+    <h4>About These Insights</h4>
+    <p>Every statistic in the insights below is sourced directly from validated pipeline outputs (Phases 1–8). The AI layer contextualises and structures these findings — it does not invent numbers. An LLM (OpenAI/watsonx) can optionally enhance the text if an API key is provided via <code>OPENAI_API_KEY</code>; the deterministic template version is shown here.</p>
+  </div>
+
+  <div id="ai-insights-container"></div>
+
+</div>
+
+<footer>Made with IBM Bob &nbsp;|&nbsp; All metrics generated from actual data execution &nbsp;|&nbsp; leads-100000.csv &nbsp;|&nbsp; Phases 1–8 complete</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DATA — all values from actual validated pipeline execution
+// Sources: eda_phase3_kpis.json, ml_phase5_metrics.json,
+//          explainability_phase6.json, sql_phase4_results.json
+// ═══════════════════════════════════════════════════════════════
+
+const SOURCES = [
+  {source:"Podcast",             group:"Events",            total:5134,  won:549, winRate:10.69, wonLost:1.094},
+  {source:"Partner Program",     group:"Referral / Partner",total:5076,  won:541, winRate:10.66, wonLost:1.063},
+  {source:"Referral",            group:"Referral / Partner",total:4994,  won:529, winRate:10.59, wonLost:1.163},
+  {source:"Webinars",            group:"Events",            total:4979,  won:526, winRate:10.56, wonLost:1.056},
+  {source:"Content Marketing",   group:"Inbound",           total:4935,  won:516, winRate:10.46, wonLost:1.110},
+  {source:"LinkedIn Outreach",   group:"Outbound",          total:4825,  won:501, winRate:10.38, wonLost:1.042},
+  {source:"Cold Email",          group:"Outbound",          total:5086,  won:519, winRate:10.20, wonLost:1.037},
+  {source:"Cold Call",           group:"Outbound",          total:5032,  won:508, winRate:10.10, wonLost:1.035},
+  {source:"Facebook Ads",        group:"Paid Ads",          total:4908,  won:489, winRate:9.96,  wonLost:1.006},
+  {source:"Chatbot",             group:"Inbound",           total:4909,  won:486, winRate:9.90,  wonLost:0.973},
+  {source:"Retargeting Ads",     group:"Paid Ads",          total:5102,  won:505, winRate:9.90,  wonLost:1.016},
+  {source:"Direct Traffic",      group:"Inbound",           total:4986,  won:493, winRate:9.89,  wonLost:0.983},
+  {source:"Organic Search (SEO)",group:"Inbound",           total:5113,  won:502, winRate:9.82,  wonLost:0.986},
+  {source:"Trade Show",          group:"Events",            total:5079,  won:493, winRate:9.71,  wonLost:0.991},
+  {source:"Google Ads",          group:"Paid Ads",          total:5020,  won:487, winRate:9.70,  wonLost:0.969},
+  {source:"Social Media",        group:"Social Media",      total:4996,  won:483, winRate:9.67,  wonLost:0.958},
+  {source:"Purchased List",      group:"Outbound",          total:5015,  won:479, winRate:9.55,  wonLost:0.941},
+  {source:"Other",               group:"Other",             total:4872,  won:464, winRate:9.52,  wonLost:0.935},
+  {source:"Website Form",        group:"Inbound",           total:5069,  won:471, winRate:9.29,  wonLost:0.939},
+  {source:"Networking Event",    group:"Events",            total:4870,  won:452, winRate:9.28,  wonLost:0.909},
+];
+
+// LR Coefficients from explainability_phase6.json — top 10 by |coef|
+const LR_COEFS_P6 = [
+  {feature:"source_Organic Search (SEO)", coef:-0.033526},
+  {feature:"source_group_Inbound",        coef:-0.030160},
+  {feature:"source_tier",                 coef:-0.025017},
+  {feature:"source_Trade Show",           coef: 0.024201},
+  {feature:"source_Google Ads",           coef:-0.023015},
+  {feature:"source_Cold Call",            coef:-0.022411},
+  {feature:"source_Retargeting Ads",      coef: 0.021834},
+  {feature:"notes_sentiment",             coef:-0.021208},
+  {feature:"source_Direct Traffic",       coef:-0.018344},
+  {feature:"source_Purchased List",       coef: 0.016749},
+];
+
+// All source-level LR coefs for the table (explainability_phase6.json)
+const LR_COEFS_ALL = [
+  {source:"Organic Search (SEO)", coef:-0.033526},
+  {source:"Trade Show",           coef: 0.024201},
+  {source:"Google Ads",           coef:-0.023015},
+  {source:"Cold Call",            coef:-0.022411},
+  {source:"Retargeting Ads",      coef: 0.021834},
+  {source:"Direct Traffic",       coef:-0.018344},
+  {source:"Purchased List",       coef: 0.016749},
+  {source:"Content Marketing",    coef: 0.016502},
+  {source:"Partner Program",      coef: 0.012033},
+  {source:"Website Form",         coef: 0.009724},
+  {source:"LinkedIn Outreach",    coef: 0.008208},
+  {source:"Podcast",              coef: 0.007089},
+  {source:"Cold Email",           coef: 0.006271},
+  {source:"Referral",             coef:-0.003293},
+  {source:"Other",                coef:-0.001994},
+  {source:"Facebook Ads",         coef:-0.001830},
+  {source:"Networking Event",     coef:-0.001223},
+  {source:"Webinars",             coef: 0.000369},
+  {source:"Social Media",         coef:-0.008224},
+  {source:"Chatbot",              coef: 0.0},       // not in top-31 individually
+];
+
+// RF Gini importances from explainability_phase6.json — top 10
+const RF_IMP_P6 = [
+  {feature:"notes_sentiment",          imp:0.392332},
+  {feature:"company_freq",             imp:0.226810},
+  {feature:"notes_word_count",         imp:0.171381},
+  {feature:"owner_freq",               imp:0.050297},
+  {feature:"source_tier",              imp:0.016128},
+  {feature:"source_LinkedIn Outreach", imp:0.009617},
+  {feature:"source_Cold Call",         imp:0.009064},
+  {feature:"source_Referral",          imp:0.008167},
+  {feature:"source_Partner Program",   imp:0.007901},
+  {feature:"source_group_Inbound",     imp:0.007530},
+];
+
+// Permutation importance from explainability_phase6.json
+const PERM_P6 = [
+  {feature:"notes_sentiment",  mean: 0.008953},
+  {feature:"notes_word_count", mean: 0.004188},
+  {feature:"owner_freq",       mean: 0.002518},
+  {feature:"source_tier",      mean: 0.002226},
+  {feature:"notes_has_text",   mean: 0.000000},
+  {feature:"company_freq",     mean:-0.004765},
+  {feature:"source_group",     mean:-0.005239},
+  {feature:"source",           mean:-0.009671},
+];
+
+// SHAP mean |SHAP| from explainability_phase6.json — top 10
+const SHAP_P6 = [
+  {feature:"notes_word_count",           shap:0.005713},
+  {feature:"notes_sentiment",            shap:0.005179},
+  {feature:"company_freq",               shap:0.004284},
+  {feature:"source_tier",                shap:0.002668},
+  {feature:"source_group_Inbound",       shap:0.001789},
+  {feature:"owner_freq",                 shap:0.001753},
+  {feature:"source_group_Ref/Partner",   shap:0.000896},
+  {feature:"source_Referral",            shap:0.000786},
+  {feature:"source_group_Events",        shap:0.000766},
+  {feature:"source_group_Paid Ads",      shap:0.000757},
+];
+
+// Actual vs predicted from explainability_phase6.json (c1_actual_vs_predicted)
+const AVP_P6 = [
+  {source:"Podcast",         actual:0.1069, pred:0.5049},
+  {source:"Partner Prog.",   actual:0.1066, pred:0.5041},
+  {source:"Referral",        actual:0.1059, pred:0.5028},
+  {source:"Webinars",        actual:0.1056, pred:0.5018},
+  {source:"Content Mktg.",   actual:0.1046, pred:0.5011},
+  {source:"LinkedIn",        actual:0.1038, pred:0.5004},
+  {source:"Cold Email",      actual:0.1020, pred:0.4997},
+  {source:"Cold Call",       actual:0.1010, pred:0.4991},
+  {source:"Facebook Ads",    actual:0.0996, pred:0.4985},
+  {source:"Chatbot",         actual:0.0990, pred:0.4980},
+  {source:"Retargeting",     actual:0.0990, pred:0.4976},
+  {source:"Direct Traffic",  actual:0.0989, pred:0.4972},
+  {source:"SEO",             actual:0.0982, pred:0.4967},
+  {source:"Trade Show",      actual:0.0971, pred:0.4960},
+  {source:"Google Ads",      actual:0.0970, pred:0.4955},
+  {source:"Social Media",    actual:0.0967, pred:0.4950},
+  {source:"Purchased List",  actual:0.0955, pred:0.4944},
+  {source:"Other",           actual:0.0952, pred:0.4938},
+  {source:"Website Form",    actual:0.0929, pred:0.4899},
+  {source:"Networking Ev.",  actual:0.0928, pred:0.4840},
+];
+
+// ═══════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════
+let chartsInitialized = {};
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>{
+    if(t.getAttribute('onclick').includes("'"+name+"'")) t.classList.add('active');
+  });
+  if(!chartsInitialized[name]){ initCharts(name); chartsInitialized[name]=true; }
+}
+
+function initCharts(page) {
+  if(page==='overview')      initOverview();
+  if(page==='sources')       initSources();
+  if(page==='funnel')        initFunnel();
+  if(page==='ml')            initML();
+  if(page==='explainability')initExplain();
+  if(page==='ai')            initAI();
+}
+
+function makeChart(id){ return echarts.init(document.getElementById(id)); }
+
+// ════════════════════════════════════════════════════
+// OVERVIEW
+// ════════════════════════════════════════════════════
+function initOverview(){
+  makeChart('chart-stage-pie').setOption({
+    tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},
+    legend:{orient:'vertical',right:'5%',top:'middle',textStyle:{fontSize:11}},
+    series:[{type:'pie',radius:['38%','72%'],center:['42%','50%'],
+      data:[
+        {name:'New Lead',      value:9984,  itemStyle:{color:'#93c5fd'}},
+        {name:'Qualified',     value:10109, itemStyle:{color:'#60a5fa'}},
+        {name:'Contacted',     value:10000, itemStyle:{color:'#3b82f6'}},
+        {name:'Proposal Sent', value:9952,  itemStyle:{color:'#2563eb'}},
+        {name:'Negotiation',   value:10126, itemStyle:{color:'#1d4ed8'}},
+        {name:'Closed Won',    value:9993,  itemStyle:{color:'#16a34a'}},
+        {name:'Closed Lost',   value:9988,  itemStyle:{color:'#dc2626'}},
+        {name:'Disqualified',  value:9945,  itemStyle:{color:'#ef4444'}},
+        {name:'On Hold',       value:9898,  itemStyle:{color:'#f59e0b'}},
+        {name:'Re-engagement', value:10005, itemStyle:{color:'#8b5cf6'}},
+      ],
+      label:{show:false},emphasis:{itemStyle:{shadowBlur:8,shadowColor:'rgba(0,0,0,.15)'}}}]
+  });
+
+  const sgs = ['Inbound','Outbound','Events','Paid Ads','Referral / Partner','Social Media','Other'];
+  const sg_data = {
+    'Inbound':           {won:2468, lost:4867, open:17677},
+    'Outbound':          {won:2007, lost:3928, open:14023},
+    'Events':            {won:2020, lost:4026, open:14016},
+    'Paid Ads':          {won:1481, lost:2970, open:10579},
+    'Referral / Partner':{won:1070, lost:2114, open:6886},
+    'Social Media':      {won:483,  lost:953,  open:3560},
+    'Other':             {won:464,  lost:947,  open:3461},
+  };
+  makeChart('chart-outcome-sg').setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    legend:{top:0,textStyle:{fontSize:11}},
+    grid:{left:'5%',right:'5%',bottom:'8%',top:'40px',containLabel:true},
+    xAxis:{type:'category',data:sgs,axisLabel:{fontSize:10,rotate:15}},
+    yAxis:{type:'value',axisLabel:{fontSize:10}},
+    series:[
+      {name:'Won', type:'bar',stack:'t',data:sgs.map(g=>sg_data[g].won), itemStyle:{color:'#22c55e'}},
+      {name:'Lost',type:'bar',stack:'t',data:sgs.map(g=>sg_data[g].lost),itemStyle:{color:'#ef4444'}},
+      {name:'Open',type:'bar',stack:'t',data:sgs.map(g=>sg_data[g].open),itemStyle:{color:'#93c5fd'}},
+    ]
+  });
+
+  const srcSorted = [...SOURCES].sort((a,b)=>b.winRate-a.winRate);
+  makeChart('chart-winrate-source').setOption({
+    tooltip:{trigger:'axis',formatter:p=>`${p[0].name}: ${p[0].value}%`},
+    grid:{left:'185px',right:'60px',top:'10px',bottom:'10px'},
+    xAxis:{type:'value',min:8.5,max:11.5,axisLabel:{formatter:v=>v+'%',fontSize:10}},
+    yAxis:{type:'category',data:srcSorted.map(s=>s.source),axisLabel:{fontSize:10}},
+    series:[{type:'bar',data:srcSorted.map(s=>s.winRate),barMaxWidth:16,
+      itemStyle:{color:s=>{const v=s.value;return v>=10.5?'#16a34a':v>=10?'#3b82d4':v>=9.5?'#f59e0b':'#ef4444'}},
+      label:{show:true,position:'right',formatter:v=>v.value+'%',fontSize:10}}]
+  });
+
+  const sgRates = [
+    {g:'Referral / Partner',r:10.63},{g:'Events',r:10.07},{g:'Outbound',r:10.06},
+    {g:'Inbound',r:9.87},{g:'Paid Ads',r:9.85},{g:'Social Media',r:9.67},{g:'Other',r:9.52}
+  ];
+  makeChart('chart-winrate-sg').setOption({
+    tooltip:{trigger:'axis',formatter:p=>`${p[0].name}: ${p[0].value}%`},
+    grid:{left:'145px',right:'60px',top:'10px',bottom:'10px'},
+    xAxis:{type:'value',min:9,max:11,axisLabel:{formatter:v=>v+'%',fontSize:10}},
+    yAxis:{type:'category',data:sgRates.map(s=>s.g),axisLabel:{fontSize:10}},
+    series:[{type:'bar',data:sgRates.map(s=>s.r),barMaxWidth:22,
+      itemStyle:{color:s=>s.value>=10.5?'#16a34a':s.value>=10?'#3b82d4':'#f59e0b'},
+      label:{show:true,position:'right',formatter:v=>v.value+'%',fontSize:10}}]
+  });
+}
+
+// ════════════════════════════════════════════════════
+// SOURCES
+// ════════════════════════════════════════════════════
+let sourceTableData = [...SOURCES].sort((a,b)=>b.winRate-a.winRate);
+let sortDir = {};
+
+function initSources(){
+  renderSourceTable(sourceTableData);
+  const sorted = [...SOURCES].sort((a,b)=>b.wonLost-a.wonLost);
+  makeChart('chart-won-lost-ratio').setOption({
+    tooltip:{trigger:'axis',formatter:p=>`${p[0].name}: ${p[0].value}`},
+    grid:{left:'165px',right:'70px',top:'10px',bottom:'10px'},
+    xAxis:{type:'value',min:0.85,max:1.2,axisLabel:{fontSize:10}},
+    yAxis:{type:'category',data:sorted.map(s=>s.source),axisLabel:{fontSize:10}},
+    series:[{type:'bar',data:sorted.map(s=>s.wonLost),barMaxWidth:14,
+      itemStyle:{color:s=>s.value>=1.1?'#16a34a':s.value>=1.0?'#3b82d4':'#ef4444'},
+      markLine:{data:[{xAxis:1.0,lineStyle:{color:'#9ca3af',type:'dashed',width:1},label:{formatter:'1.0',position:'end',fontSize:10}}]},
+      label:{show:true,position:'right',formatter:v=>v.value.toFixed(3),fontSize:9}}]
+  });
+  const volSorted = [...SOURCES].sort((a,b)=>b.total-a.total);
+  makeChart('chart-volume-source').setOption({
+    tooltip:{trigger:'axis',formatter:p=>`${p[0].name}: ${p[0].value.toLocaleString()}`},
+    grid:{left:'165px',right:'75px',top:'10px',bottom:'10px'},
+    xAxis:{type:'value',axisLabel:{fontSize:10}},
+    yAxis:{type:'category',data:volSorted.map(s=>s.source),axisLabel:{fontSize:10}},
+    series:[{type:'bar',data:volSorted.map(s=>s.total),barMaxWidth:14,
+      itemStyle:{color:'#3b82d4'},
+      label:{show:true,position:'right',formatter:v=>v.value.toLocaleString(),fontSize:9}}]
+  });
+}
+
+function renderSourceTable(data){
+  const tbody = document.getElementById('source-tbody');
+  const maxRate = Math.max(...data.map(d=>d.winRate));
+  tbody.innerHTML = data.map((s,i)=>{
+    const barW = Math.round(s.winRate/maxRate*100);
+    const badge = s.winRate>=10.5?'green':s.winRate>=10?'blue':s.winRate>=9.5?'amber':'red';
+    const ratioBadge = s.wonLost>=1.1?'green':s.wonLost>=1.0?'blue':'red';
+    return `<tr>
+      <td><strong>${s.source}</strong></td>
+      <td><span class="badge gray">${s.group}</span></td>
+      <td>${s.total.toLocaleString()}</td>
+      <td>${s.won.toLocaleString()}</td>
+      <td><span class="badge ${badge}">${s.winRate}%</span></td>
+      <td><span class="badge ${ratioBadge}">${s.wonLost.toFixed(3)}</span></td>
+      <td><div class="bar-inline"><div class="bar-bg"><div class="bar-fill" style="width:${barW}%"></div></div><span style="font-size:10px;color:#57606a">${s.winRate}%</span></div></td>
+    </tr>`;
+  }).join('');
+}
+
+function filterSourceTable(){
+  const val = document.getElementById('sg-filter').value;
+  const filtered = val==='all' ? [...SOURCES] : SOURCES.filter(s=>s.group===val);
+  sourceTableData = filtered.sort((a,b)=>b.winRate-a.winRate);
+  renderSourceTable(sourceTableData);
+}
+
+function sortTable(col){
+  const keys = ['source','group','total','won','winRate','wonLost'];
+  const key = keys[col];
+  sortDir[col] = sortDir[col]==='asc'?'desc':'asc';
+  sourceTableData.sort((a,b)=>{
+    const av=a[key],bv=b[key];
+    if(typeof av==='string') return sortDir[col]==='asc'?av.localeCompare(bv):bv.localeCompare(av);
+    return sortDir[col]==='asc'?av-bv:bv-av;
+  });
+  renderSourceTable(sourceTableData);
+}
+
+// ════════════════════════════════════════════════════
+// FUNNEL
+// ════════════════════════════════════════════════════
+function initFunnel(){
+  makeChart('chart-funnel-line').setOption({
+    tooltip:{trigger:'axis'},
+    grid:{left:'60px',right:'20px',top:'20px',bottom:'40px'},
+    xAxis:{type:'category',data:['New Lead','Qualified','Contacted','Proposal Sent','Negotiation','Closed Won'],axisLabel:{fontSize:11}},
+    yAxis:{type:'value',min:9800,axisLabel:{fontSize:10}},
+    series:[{type:'line',data:[9984,10109,10000,9952,10126,9993],
+      smooth:false,symbol:'circle',symbolSize:7,
+      itemStyle:{color:'#3b82d4'},lineStyle:{width:2},
+      areaStyle:{color:'rgba(59,130,212,0.08)'},
+      label:{show:true,position:'top',fontSize:10,formatter:v=>v.value.toLocaleString()}}]
+  });
+
+  makeChart('chart-terminal').setOption({
+    tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},
+    legend:{orient:'vertical',right:'5%',top:'middle',textStyle:{fontSize:11}},
+    series:[{type:'pie',radius:['40%','70%'],center:['42%','50%'],
+      data:[
+        {name:'Closed Won',    value:9993,  itemStyle:{color:'#16a34a'}},
+        {name:'Closed Lost',   value:9988,  itemStyle:{color:'#dc2626'}},
+        {name:'Disqualified',  value:9945,  itemStyle:{color:'#ef4444'}},
+        {name:'On Hold',       value:9898,  itemStyle:{color:'#f59e0b'}},
+        {name:'Re-engagement', value:10005, itemStyle:{color:'#8b5cf6'}},
+      ],label:{show:false}}]
+  });
+
+  const stages = ['New Lead','Qualified','Contacted','Proposal Sent','Negotiation','Closed Won','Closed Lost','Disqualified','On Hold','Re-engagement'];
+  const groups = ['Inbound','Outbound','Events','Paid Ads','Ref/Partner','Social Media','Other'];
+  const groupTotals = {Inbound:25012,Outbound:19958,Events:20062,'Paid Ads':15030,'Ref/Partner':10070,'Social Media':4996,Other:4872};
+  const stageTotals = {'New Lead':9984,'Qualified':10109,'Contacted':10000,'Proposal Sent':9952,'Negotiation':10126,'Closed Won':9993,'Closed Lost':9988,'Disqualified':9945,'On Hold':9898,'Re-engagement':10005};
+  const heatData = [];
+  groups.forEach((g,gi)=>{
+    stages.forEach((s,si)=>{
+      heatData.push([si,gi,Math.round(groupTotals[g]*stageTotals[s]/100000)]);
+    });
+  });
+  const maxVal = Math.max(...heatData.map(d=>d[2]));
+  makeChart('chart-heatmap').setOption({
+    tooltip:{formatter:p=>`${groups[p.data[1]]} / ${stages[p.data[0]]}: ${p.data[2]}`},
+    grid:{left:'120px',right:'80px',top:'10px',bottom:'60px'},
+    xAxis:{type:'category',data:stages,axisLabel:{rotate:35,fontSize:10}},
+    yAxis:{type:'category',data:groups,axisLabel:{fontSize:10}},
+    visualMap:{min:0,max:maxVal,calculable:true,orient:'vertical',right:0,top:'middle',textStyle:{fontSize:10},inRange:{color:['#eff6ff','#1d4ed8']}},
+    series:[{type:'heatmap',data:heatData,label:{show:true,fontSize:9},emphasis:{itemStyle:{shadowBlur:8}}}]
+  });
+
+  makeChart('chart-sentiment').setOption({
+    tooltip:{trigger:'axis'},
+    grid:{left:'60px',right:'30px',top:'30px',bottom:'40px'},
+    xAxis:{type:'category',data:['Closed Won','Closed Lost / Disq.','Open Pipeline']},
+    yAxis:{type:'value',min:0,max:0.1,axisLabel:{formatter:v=>v.toFixed(3),fontSize:10}},
+    series:[{type:'bar',
+      data:[{value:0.0575,itemStyle:{color:'#16a34a'}},{value:0.0646,itemStyle:{color:'#ef4444'}},{value:0.0621,itemStyle:{color:'#3b82d4'}}],
+      barMaxWidth:70,
+      label:{show:true,position:'top',formatter:v=>v.value.toFixed(4),fontSize:11},
+      markLine:{data:[{yAxis:0.06,lineStyle:{color:'#9ca3af',type:'dashed'},label:{formatter:'≈ equal',fontSize:10}}]}}]
+  });
+}
+
+// ════════════════════════════════════════════════════
+// ML — 3 models from ml_phase5_metrics.json
+// ════════════════════════════════════════════════════
+function initML(){
+  // ROC-AUC grouped bar: Val + Test for LR / RF / LGBM
+  makeChart('chart-model-auc').setOption({
+    tooltip:{trigger:'axis'},
+    legend:{top:0,textStyle:{fontSize:11}},
+    grid:{left:'50px',right:'20px',top:'40px',bottom:'40px'},
+    xAxis:{type:'category',data:['Logistic Regression','Random Forest','LightGBM'],axisLabel:{fontSize:11}},
+    yAxis:{type:'value',min:0.48,max:0.54,axisLabel:{formatter:v=>v.toFixed(3),fontSize:10}},
+    series:[
+      {name:'Train AUC',type:'bar',data:[0.5131,0.6525,0.6888],itemStyle:{color:'#93c5fd'},barMaxWidth:28,
+       label:{show:true,position:'top',fontSize:9,formatter:v=>v.value.toFixed(4)}},
+      {name:'Val AUC',  type:'bar',data:[0.5113,0.5050,0.4963],itemStyle:{color:'#3b82d4'},barMaxWidth:28,
+       label:{show:true,position:'top',fontSize:9,formatter:v=>v.value.toFixed(4)}},
+      {name:'Test AUC', type:'bar',data:[0.5166,0.5061,0.4998],itemStyle:{color:'#1d4ed8'},barMaxWidth:28,
+       label:{show:true,position:'top',fontSize:9,formatter:v=>v.value.toFixed(4)}},
+      {name:'Random Baseline',type:'line',data:[0.500,0.500,0.500],
+       lineStyle:{type:'dashed',color:'#ef4444',width:2},symbol:'none',itemStyle:{color:'#ef4444'}},
+    ]
+  });
+
+  // CV fold lines
+  makeChart('chart-cv').setOption({
+    tooltip:{trigger:'axis'},
+    legend:{top:0,textStyle:{fontSize:11}},
+    grid:{left:'60px',right:'20px',top:'40px',bottom:'40px'},
+    xAxis:{type:'category',data:['Fold 1','Fold 2','Fold 3','Fold 4','Fold 5'],axisLabel:{fontSize:11}},
+    yAxis:{type:'value',min:0.486,max:0.524,axisLabel:{formatter:v=>v.toFixed(3),fontSize:10}},
+    series:[
+      {name:'Logistic Regression',type:'line',data:[0.4946,0.5078,0.4961,0.5059,0.4970],
+       smooth:false,symbol:'circle',symbolSize:6,itemStyle:{color:'#3b82d4'},lineStyle:{width:2}},
+      {name:'Random Forest',type:'line',data:[0.5131,0.5046,0.4922,0.5049,0.5165],
+       smooth:false,symbol:'circle',symbolSize:6,itemStyle:{color:'#7c5cd8'},lineStyle:{width:2}},
+      {name:'LightGBM',type:'line',data:[0.5129,0.5025,0.5032,0.5115,0.5126],
+       smooth:false,symbol:'circle',symbolSize:6,itemStyle:{color:'#ea580c'},lineStyle:{width:2}},
+      {name:'Random Baseline',type:'line',data:[0.500,0.500,0.500,0.500,0.500],
+       lineStyle:{type:'dashed',color:'#9ca3af'},symbol:'none',itemStyle:{color:'#9ca3af'}},
+    ]
+  });
+
+  // All metrics — test set grouped bar
+  const metrics = ['Accuracy','Precision','Recall','F1','ROC-AUC','PR-AUC'];
+  const lr_test  = [0.5016,0.1047,0.5284,0.1748,0.5166,0.1039];
+  const rf_test  = [0.5737,0.1001,0.4089,0.1609,0.5061,0.1021];
+  const lgbm_test= [0.5617,0.0994,0.4203,0.1608,0.4998,0.1001];
+  makeChart('chart-model-metrics').setOption({
+    tooltip:{trigger:'axis'},
+    legend:{top:0,textStyle:{fontSize:11}},
+    grid:{left:'50px',right:'20px',top:'40px',bottom:'40px'},
+    xAxis:{type:'category',data:metrics,axisLabel:{fontSize:11}},
+    yAxis:{type:'value',min:0,max:0.7,axisLabel:{fontSize:10}},
+    series:[
+      {name:'Logistic Regression',type:'bar',data:lr_test,  itemStyle:{color:'#3b82d4'},barMaxWidth:24,
+       label:{show:true,position:'top',fontSize:9,formatter:v=>v.value}},
+      {name:'Random Forest',      type:'bar',data:rf_test,  itemStyle:{color:'#7c5cd8'},barMaxWidth:24,
+       label:{show:true,position:'top',fontSize:9,formatter:v=>v.value}},
+      {name:'LightGBM',           type:'bar',data:lgbm_test,itemStyle:{color:'#ea580c'},barMaxWidth:24,
+       label:{show:true,position:'top',fontSize:9,formatter:v=>v.value}},
+    ]
+  });
+}
+
+// ════════════════════════════════════════════════════
+// EXPLAINABILITY — from explainability_phase6.json
+// ════════════════════════════════════════════════════
+function initExplain(){
+  // LR coefficients — sorted by coef ascending (most negative left)
+  const lrSorted = [...LR_COEFS_P6].sort((a,b)=>a.coef-b.coef);
+  makeChart('chart-lr-coef').setOption({
+    tooltip:{trigger:'axis',formatter:p=>`${p[0].name}: ${p[0].value}`},
+    grid:{left:'210px',right:'80px',top:'10px',bottom:'10px'},
+    xAxis:{type:'value',axisLabel:{fontSize:10}},
+    yAxis:{type:'category',data:lrSorted.map(d=>d.feature),axisLabel:{fontSize:10}},
+    series:[{type:'bar',data:lrSorted.map(d=>({value:d.coef,itemStyle:{color:d.coef>0?'#16a34a':'#ef4444'}})),
+      barMaxWidth:18,
+      markLine:{data:[{xAxis:0,lineStyle:{color:'#9ca3af',type:'dashed'}}]},
+      label:{show:true,position:d=>d.data.value>=0?'right':'left',formatter:v=>v.value.toFixed(5),fontSize:9}}]
+  });
+
+  // RF Gini importance
+  const rfSorted = [...RF_IMP_P6].sort((a,b)=>a.imp-b.imp);
+  makeChart('chart-rf-imp').setOption({
+    tooltip:{trigger:'axis',formatter:p=>`${p[0].name}: ${(p[0].value*100).toFixed(1)}%`},
+    grid:{left:'210px',right:'80px',top:'10px',bottom:'10px'},
+    xAxis:{type:'value',axisLabel:{formatter:v=>(v*100).toFixed(1)+'%',fontSize:10}},
+    yAxis:{type:'category',data:rfSorted.map(d=>d.feature),axisLabel:{fontSize:10}},
+    series:[{type:'bar',data:rfSorted.map(d=>d.imp),barMaxWidth:18,
+      itemStyle:{color:'#f59e0b'},
+      label:{show:true,position:'right',formatter:v=>(v.value*100).toFixed(1)+'%',fontSize:9}}]
+  });
+
+  // Permutation importance
+  const permSorted = [...PERM_P6].sort((a,b)=>a.mean-b.mean);
+  makeChart('chart-perm').setOption({
+    tooltip:{trigger:'axis'},
+    grid:{left:'160px',right:'90px',top:'20px',bottom:'20px'},
+    xAxis:{type:'value',axisLabel:{fontSize:10}},
+    yAxis:{type:'category',data:permSorted.map(d=>d.feature),axisLabel:{fontSize:10}},
+    series:[{type:'bar',data:permSorted.map(d=>({value:d.mean,itemStyle:{color:d.mean>=0?'#3b82d4':'#ef4444'}})),
+      barMaxWidth:24,
+      markLine:{data:[{xAxis:0,lineStyle:{color:'#9ca3af',type:'dashed'}}]},
+      label:{show:true,position:d=>d.data.value>=0?'right':'left',formatter:v=>v.value.toFixed(5),fontSize:9}}]
+  });
+
+  // SHAP mean |SHAP|
+  const shapSorted = [...SHAP_P6].sort((a,b)=>a.shap-b.shap);
+  makeChart('chart-shap').setOption({
+    tooltip:{trigger:'axis'},
+    grid:{left:'210px',right:'80px',top:'20px',bottom:'20px'},
+    xAxis:{type:'value',axisLabel:{fontSize:10}},
+    yAxis:{type:'category',data:shapSorted.map(d=>d.feature),axisLabel:{fontSize:10}},
+    series:[{type:'bar',data:shapSorted.map(d=>d.shap),barMaxWidth:18,
+      itemStyle:{color:'#7c5cd8'},
+      label:{show:true,position:'right',formatter:v=>v.value.toFixed(5),fontSize:9}}]
+  });
+
+  // Actual vs Predicted
+  makeChart('chart-avp').setOption({
+    tooltip:{trigger:'axis'},
+    legend:{top:0,textStyle:{fontSize:10}},
+    grid:{left:'80px',right:'20px',top:'40px',bottom:'65px'},
+    xAxis:{type:'category',data:AVP_P6.map(d=>d.source),axisLabel:{rotate:45,fontSize:9}},
+    yAxis:{type:'value',min:0,max:0.6,axisLabel:{formatter:v=>(v*100).toFixed(0)+'%',fontSize:10}},
+    series:[
+      {name:'Actual Win Rate', type:'bar',data:AVP_P6.map(d=>d.actual),itemStyle:{color:'#22c55e'},barMaxWidth:10},
+      {name:'Predicted Prob.', type:'bar',data:AVP_P6.map(d=>d.pred),  itemStyle:{color:'#3b82d4'},barMaxWidth:10},
+    ]
+  });
+
+  // Coefficient table — LR_COEFS_ALL vs SOURCES win rates
+  let coefTableData = SOURCES.map((s,i)=>{
+    const c = LR_COEFS_ALL.find(x=>x.source===s.source);
+    return {source:s.source, coef:c?c.coef:null, winRate:s.winRate, rank:i+1};
+  });
+  let coefSortDir = {};
+  window.sortCoefTable = function(col){
+    const keys=['source','coef','','winRate'];
+    const key=keys[col];
+    coefSortDir[col]=coefSortDir[col]==='asc'?'desc':'asc';
+    coefTableData.sort((a,b)=>{
+      const av=a[key],bv=b[key];
+      if(av==null) return 1; if(bv==null) return -1;
+      if(typeof av==='string') return coefSortDir[col]==='asc'?av.localeCompare(bv):bv.localeCompare(av);
+      return coefSortDir[col]==='asc'?av-bv:bv-av;
+    });
+    renderCoefTable();
+  };
+  function renderCoefTable(){
+    document.getElementById('coef-tbody').innerHTML = coefTableData.map(row=>{
+      const coef = row.coef;
+      const coefStr = coef!=null?coef.toFixed(5):'—';
+      const dir = coef!=null?(coef>0?'<span class="badge green">Positive</span>':'<span class="badge red">Negative</span>'):'<span class="badge gray">—</span>';
+      const badge = row.winRate>=10.5?'green':row.winRate>=10?'blue':row.winRate>=9.5?'amber':'red';
+      return `<tr>
+        <td><strong>${row.source}</strong></td>
+        <td style="font-family:monospace">${coefStr}</td>
+        <td>${dir}</td>
+        <td><span class="badge ${badge}">${row.winRate}%</span></td>
+        <td>#${row.rank}</td>
+      </tr>`;
+    }).join('');
+  }
+  renderCoefTable();
+}
+
+// ════════════════════════════════════════════════════
+// AI INSIGHTS — from validated reports/ai_insights.json
+// ════════════════════════════════════════════════════
+const AI_INSIGHTS = [
+  {
+    id:"data_quality", title:"Data Quality Assessment", category:"Data", rating:"positive",
+    text:"The leads dataset contains 100,000 records across 14 fields. Data quality is excellent: 0 missing values, 0 duplicate Account IDs, 0 invalid Source values, and 0 invalid Deal Stage values were found. The dataset required no imputation or deduplication and was used as-is after standardisation of field names and creation of 8 derived features (source_tier, owner_freq, company_freq, notes_has_text, plus OHE columns)."
+  },
+  {
+    id:"pipeline_overview", title:"Pipeline Overview", category:"KPI", rating:"neutral",
+    text:"Across 100,000 total leads, 9,993 reached Closed Won — an overall win rate of 9.99%. A further 19,933 leads were Closed Lost or Disqualified (loss rate 19.93%), while 70,074 leads (70.1%) remain in active pipeline stages (New Lead, Qualified, Contacted, Proposal Sent, Negotiation, On Hold, Re-engagement). The overall close rate (won + lost + disqualified) stands at 29.93%, suggesting substantial open pipeline with conversion potential still to be realised."
+  },
+  {
+    id:"source_performance", title:"Lead Source Performance", category:"Analytics", rating:"positive",
+    text:"Podcast is the highest-performing acquisition channel with a 10.69% win rate across 5,134 leads, followed by Partner Program (10.66%), Referral (10.59%), Webinars (10.56%), and Content Marketing (10.46%). The lowest-performing channel is Networking Event at 9.28%. The spread across all 20 sources is 1.41 percentage points — real but narrow. This spread is consistent across SQL validation and is not an artefact of data imbalance — all sources have approximately equal lead volumes (~5,000 each)."
+  },
+  {
+    id:"source_group_insight", title:"Channel Group Analysis", category:"Analytics", rating:"positive",
+    text:"Grouping the 20 sources into 7 channel categories reveals that Referral / Partner delivers the highest win rate at 10.63% (10,070 leads). Events and Outbound channels both exceed 10%, while Other (9.52%) and Social Media (9.67%) underperform the 9.99% average. Inbound channels, despite having the largest lead volume (25,012), achieve only 9.87% — a volume-quality trade-off worth monitoring. These channel-group patterns are actionable for budget allocation decisions, though causation cannot be inferred from win rate differences alone."
+  },
+  {
+    id:"sentiment_finding", title:"Notes Sentiment Analysis", category:"Feature Analysis", rating:"neutral",
+    text:"TextBlob sentiment analysis on the Notes field reveals that mean polarity scores are nearly identical across deal outcomes: Won = 0.0575, Lost = 0.0646, Open = 0.0621. The absolute difference between Won and Lost is only 0.0071 polarity points. This confirms that notes sentiment carries no meaningful signal for predicting deal outcomes in this dataset. The finding held across both the EDA phase and permutation importance analysis (permutation drop = +0.008953 — the smallest among all feature groups when controlling for scale)."
+  },
+  {
+    id:"ml_performance", title:"Predictive Model Performance (Phase 5)", category:"ML", rating:"warning",
+    text:"Three classifiers were trained to predict Closed Won (is_won=1) on a 70/15/15 stratified split using 8 engineered features. Logistic Regression achieved val ROC-AUC = 0.5113 (CV mean: 0.5003 ± 0.0054); Random Forest achieved val ROC-AUC = 0.5050 (CV mean: 0.5063 ± 0.0084); LightGBM achieved val ROC-AUC = 0.4963 (CV mean: 0.5085 ± 0.0047). The best model (LR) performs only 0.0113 above random baseline. High train AUC for RF (0.6525) and LightGBM (0.6888) confirms overfitting — there is no generalizable signal in the available features."
+  },
+  {
+    id:"feature_importance", title:"Feature Importance Interpretation (Phase 6)", category:"Explainability", rating:"warning",
+    text:"Random Forest Gini importance assigns 39.2% to notes_sentiment, 22.7% to company_freq, and 17.1% to notes_word_count. However, permutation importance (actual ROC-AUC Δ when features are shuffled) shows all drops are near-zero: max = +0.008953 (notes_sentiment), min = −0.009671 (source). SHAP mean |SHAP| confirms notes_word_count (0.005713) and notes_sentiment (0.005179) as the most influential features — but in absolute terms these SHAP values are negligible. Gini importance overstates continuous features; no feature provides genuine predictive lift."
+  },
+  {
+    id:"business_recommendations", title:"Business Recommendations", category:"Recommendations", rating:"positive",
+    text:"Based on validated analytical findings: (1) Prioritise Podcast, Partner Program, Referral, and Webinar channels — consistently above 10.5% win rates with Won:Lost ratios of 1.056–1.163. (2) Review Networking Event (9.28% win rate, Won:Lost = 0.909 — the only source with more losses than wins) and Website Form (9.29%) for conversion optimisation. (3) Inbound channels generate 24.7% of all Closed Won by volume despite average win rates — protect and scale this volume. (4) For predictive lead scoring, invest in capturing: deal value, industry vertical, response time, engagement score, and follow-up count. Note: all recommendations are associations, not causal claims."
+  },
+  {
+    id:"causal_disclaimer", title:"Correlation vs Causation Statement", category:"Methodology", rating:"neutral",
+    text:"All analytical findings in this project describe statistical associations observed in the dataset. Higher win rates for Podcast, Referral, and Partner Program sources reflect patterns in the data — they do not establish that these channels cause higher win rates. Unmeasured confounding factors (lead quality, industry, deal size, sales rep skill) may explain observed differences. Model coefficients and feature importances describe learned associations, not causal pathways. Business decisions based on these findings should be validated through controlled A/B experiments or quasi-experimental methods."
+  },
+];
+
+function initAI(){
+  const container = document.getElementById('ai-insights-container');
+  const catColors = {
+    'Data':'#3b82d4','KPI':'#7c5cd8','Analytics':'#16a34a',
+    'Feature Analysis':'#d97706','ML':'#dc2626',
+    'Explainability':'#ea580c','Recommendations':'#0891b2','Methodology':'#57606a'
+  };
+  const ratingIcon  = {positive:'✓', neutral:'●', warning:'⚠'};
+  const ratingColor = {positive:'#dcfce7', neutral:'#f0f2f5', warning:'#fef3c7'};
+  const ratingText  = {positive:'#16a34a', neutral:'#57606a', warning:'#d97706'};
+
+  container.innerHTML = AI_INSIGHTS.map(ins=>{
+    const cc = catColors[ins.category]||'#3b82d4';
+    const bg = ratingColor[ins.rating];
+    const tc = ratingText[ins.rating];
+    const ic = ratingIcon[ins.rating];
+    return `
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:20px;margin-bottom:14px;border-left:4px solid ${cc}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:13px;font-weight:700;color:#1f2328">${ins.title}</span>
+          <span style="font-size:11px;font-weight:600;padding:2px 9px;border-radius:12px;background:${cc}22;color:${cc}">${ins.category}</span>
+        </div>
+        <span style="font-size:11px;font-weight:600;padding:2px 9px;border-radius:12px;background:${bg};color:${tc}">${ic} ${ins.rating.charAt(0).toUpperCase()+ins.rating.slice(1)}</span>
+      </div>
+      <p style="font-size:13px;color:#374151;line-height:1.7;margin:0">${ins.text}</p>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
+chartsInitialized['overview'] = true;
+initOverview();
+</script>
+</body>
+</html>

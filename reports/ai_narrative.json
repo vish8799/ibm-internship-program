@@ -1,0 +1,84 @@
+{
+  "generated_by": "src/ai_narrative.py",
+  "narrative_source": "heuristic_fallback",
+  "watsonx_enabled": false,
+  "watsonx_model": "ibm/granite-13b-chat-v2",
+  "context_snapshot": {
+    "total_leads": 100000,
+    "win_rate_pct": 9.99,
+    "top_source": "Podcast",
+    "top_source_rate": 10.69,
+    "win_rate_spread": 1.41,
+    "best_model_name": "Logistic Regression",
+    "best_val_auc": 0.5113,
+    "perm_max": 0.008953,
+    "perm_min": -0.009671,
+    "top_shap_feature": "notes_word_count"
+  },
+  "narrative": "EXECUTIVE SUMMARY\nThe leads dataset contains 100,000 records with a global win rate of 9.99%, reflecting a stable but modest conversion baseline. Podcast is the highest-performing acquisition channel (10.69% win rate, 5,134 leads), while Networking Event is lowest at 9.28%. The best-performing channel group is Referral / Partner at 10.63%.\n\nKEY FINDINGS\n1. Pipeline health: 9,993 of 100,000 leads reached Closed Won (9.99%). 70,074 leads (70.1%) remain in active pipeline stages, representing unconverted revenue potential.\n2. Channel performance: Win rates span 1.41 pp across 20 sources (9.28%–10.69%). Top 5: Podcast (10.69%), Partner Program (10.66%), Referral (10.59%), Webinars (10.56%), Content Marketing (10.46%). All sources have similar lead volumes (~5,000), so differences are quality-driven, not volume-driven.\n3. Predictive model: The best model (Logistic Regression) achieved validation ROC-AUC = 0.5113 — only 0.0113 above the random baseline of 0.50. Permutation importance is near zero (range -0.00967 to +0.00895), confirming that the available features do not provide genuine predictive lift for individual-lead scoring.\n4. Notes sentiment: Mean polarity scores are nearly identical for Won (0.0575) vs Lost (0.0646) leads — a 0.0071 difference. Notes sentiment carries no meaningful predictive signal.\n5. Data quality: 0 missing values, 0 duplicate Account IDs, 0 invalid source values. Dataset is production-quality with no imputation required.\n6. Explainability: SHAP identifies notes_word_count as the top feature (mean |SHAP| = 0.00571). However, permutation importance confirms no feature provides ROC-AUC lift > 0.0090 — all within noise. These are associations, not causal drivers.\n\nRECOMMENDATIONS\n1. Prioritise Podcast, Partner Program, Referral, and Webinars for marketing investment — these channels consistently achieve 10.5%+ win rates with balanced volumes.\n2. Audit Networking Event (9.28% win rate) and Website Form (9.29%) for conversion funnel issues; these are the only channels producing more losses than wins.\n3. Do not deploy the current model as an individual-lead scorer — its ROC-AUC of 0.5113 is near-random. Enrich the feature set with deal size, response time, engagement score, and industry vertical before revisiting predictive scoring.\n4. All recommendations are based on observed statistical associations. Validate causal claims through controlled A/B experiments before committing budget changes.\n",
+  "insights": [
+    {
+      "id": "data_quality",
+      "title": "Data Quality Assessment",
+      "category": "Data",
+      "rating": "positive",
+      "text": "The leads dataset contains 100,000 records across 14 fields. Data quality is excellent: 0 missing values, 0 duplicate Account IDs, 0 invalid Source values, and 0 invalid Deal Stage values. No imputation or deduplication was required."
+    },
+    {
+      "id": "pipeline_overview",
+      "title": "Pipeline Overview",
+      "category": "KPI",
+      "rating": "neutral",
+      "text": "Across 100,000 total leads, 9,993 reached Closed Won (9.99% win rate). 19,933 leads were Closed Lost or Disqualified. 70,074 leads (70.1%) remain in active pipeline stages."
+    },
+    {
+      "id": "source_performance",
+      "title": "Lead Source Performance",
+      "category": "Analytics",
+      "rating": "positive",
+      "text": "Podcast is the highest-performing channel at 10.69% win rate (5,134 leads). Lowest is Networking Event at 9.28%. Win rate spread across all 20 sources: 1.41 pp. All sources have approximately equal lead volumes (~5,000 each), so differences reflect lead quality, not volume bias."
+    },
+    {
+      "id": "source_group_insight",
+      "title": "Channel Group Analysis",
+      "category": "Analytics",
+      "rating": "positive",
+      "text": "Referral / Partner delivers the highest group win rate at 10.63% (10,070 leads). Other is lowest at 9.52%. Inbound channels contribute the largest lead volume but achieve only 9.87% win rate — a volume-quality trade-off to monitor."
+    },
+    {
+      "id": "sentiment_finding",
+      "title": "Notes Sentiment Analysis",
+      "category": "Feature Analysis",
+      "rating": "neutral",
+      "text": "Mean sentiment polarity: Won = 0.0575, Lost = 0.0646, Open = 0.0621. Absolute difference = 0.0071 — negligible. Notes sentiment carries no meaningful predictive signal and was confirmed by near-zero permutation importance."
+    },
+    {
+      "id": "ml_performance",
+      "title": "Predictive Model Performance",
+      "category": "ML",
+      "rating": "warning",
+      "text": "Three models trained on a 70/15/15 stratified split (69,999/15,001/15,000). Best: Logistic Regression (val ROC-AUC = 0.5113), only 0.0113 above the 0.50 random baseline. RF train AUC = 0.6525 vs val = 0.505 confirms overfitting. Current features do not generalise to individual-lead prediction."
+    },
+    {
+      "id": "feature_importance",
+      "title": "Feature Importance (Phase 6)",
+      "category": "Explainability",
+      "rating": "warning",
+      "text": "RF Gini assigns 39.2% importance to notes_sentiment. SHAP identifies notes_word_count as the top feature (mean |SHAP| = 0.00571). Permutation importance range: -0.00967 to +0.00895 — all near-zero. Gini overstates continuous features; no feature provides genuine predictive lift."
+    },
+    {
+      "id": "business_recommendations",
+      "title": "Business Recommendations",
+      "category": "Recommendations",
+      "rating": "positive",
+      "text": "(1) Prioritise Podcast, Partner Program, Referral, and Webinars — 10.5%+ win rates with equal volumes. (2) Review Networking Event (9.28%) and Website Form (9.29%) for conversion optimisation. (3) Do not use the current model for live lead scoring (ROC-AUC 0.5113 ≈ random). Add deal size, response time, engagement score, and industry vertical before revisiting ML scoring. (4) All findings are associations. Validate causal claims with A/B tests."
+    },
+    {
+      "id": "causal_disclaimer",
+      "title": "Causal Boundary Statement",
+      "category": "Methodology",
+      "rating": "neutral",
+      "text": "All findings describe statistical associations in the dataset. Higher win rates for Podcast, Referral, and Partner Program reflect observed patterns — they do not establish causation. Confounders (lead quality, industry, deal size, sales rep) may explain differences. SHAP and coefficient values describe model behaviour, not causal pathways."
+    }
+  ]
+}

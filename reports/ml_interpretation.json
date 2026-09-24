@@ -1,0 +1,20 @@
+{
+  "ml_interpretation": {
+    "problem_statement": "Binary classification: predict whether a lead reaches Closed Won (is_won=1) from lead source, source group, notes sentiment, and notes word count.",
+    "key_finding": "Both models achieve ROC-AUC ~0.505 — marginally above random chance (0.5). This is the honest, expected result given the dataset structure: all 20 sources have nearly identical win rates (9.28%-10.69%), and notes sentiment shows no meaningful correlation with outcome. The dataset does not contain enough discriminative signal in the available features to build a practically useful predictive model.",
+    "why_limited_predictability": [
+      "Source win rates span only 1.4 percentage points across 20 channels — insufficient differentiation",
+      "Notes sentiment mean is nearly identical across Won (0.0575), Lost (0.0646), and Open (0.0621) outcomes",
+      "Notes word count shows no meaningful difference by outcome",
+      "Lead Owner and Company fields were correctly excluded as quasi-identifiers (~93k unique owners for 100k records)",
+      "No temporal, financial, or behavioral features exist in the dataset"
+    ],
+    "what_the_model_does_capture": [
+      "Notes sentiment and word count account for 90% of Random Forest feature importance — but this reflects their numeric variance, not genuine predictive power",
+      "Source-level features (Podcast, Partner Program, Networking Event) appear in the top 10 by importance, consistent with the small but real win-rate spread observed in EDA"
+    ],
+    "correct_interpretation": "The ~1.4 percentage point spread in win rates across sources IS a real analytical finding useful for business prioritisation (e.g. invest more in Podcast/Referral channels). However, this signal is too weak for a lead-level binary classifier to be practically actionable. A ROC-AUC of 0.509 means the model is essentially guessing.",
+    "causal_warning": "Correlation between source and win rate does NOT imply that the source causes the win. Other unmeasured factors (lead quality, industry, deal size) likely drive outcomes.",
+    "recommendation": "Use the source-level win rate analytics (from EDA/SQL phases) for channel investment decisions. For a practically useful ML model, additional features would be needed: deal size, industry, engagement score, response time, number of follow-ups, etc."
+  }
+}

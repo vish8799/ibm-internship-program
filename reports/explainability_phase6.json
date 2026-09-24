@@ -1,0 +1,918 @@
+{
+  "g1_lr_coefficients": [
+    {
+      "feature": "source_Organic Search (SEO)",
+      "coefficient": -0.033526
+    },
+    {
+      "feature": "source_group_Inbound",
+      "coefficient": -0.03016
+    },
+    {
+      "feature": "source_tier",
+      "coefficient": -0.025017
+    },
+    {
+      "feature": "source_Trade Show",
+      "coefficient": 0.024201
+    },
+    {
+      "feature": "source_Google Ads",
+      "coefficient": -0.023015
+    },
+    {
+      "feature": "source_Cold Call",
+      "coefficient": -0.022411
+    },
+    {
+      "feature": "source_Retargeting Ads",
+      "coefficient": 0.021834
+    },
+    {
+      "feature": "notes_sentiment",
+      "coefficient": -0.021208
+    },
+    {
+      "feature": "source_Direct Traffic",
+      "coefficient": -0.018344
+    },
+    {
+      "feature": "source_Purchased List",
+      "coefficient": 0.016749
+    },
+    {
+      "feature": "source_Content Marketing",
+      "coefficient": 0.016502
+    },
+    {
+      "feature": "company_freq",
+      "coefficient": 0.015642
+    },
+    {
+      "feature": "owner_freq",
+      "coefficient": 0.013725
+    },
+    {
+      "feature": "source_Partner Program",
+      "coefficient": 0.012033
+    },
+    {
+      "feature": "source_Website Form",
+      "coefficient": 0.009724
+    },
+    {
+      "feature": "source_group_Outbound",
+      "coefficient": 0.008818
+    },
+    {
+      "feature": "source_group_Referral / Partner",
+      "coefficient": 0.00874
+    },
+    {
+      "feature": "source_Social Media",
+      "coefficient": -0.008224
+    },
+    {
+      "feature": "source_group_Social Media",
+      "coefficient": -0.008224
+    },
+    {
+      "feature": "source_LinkedIn Outreach",
+      "coefficient": 0.008208
+    },
+    {
+      "feature": "source_Podcast",
+      "coefficient": 0.007089
+    },
+    {
+      "feature": "notes_word_count",
+      "coefficient": -0.006743
+    },
+    {
+      "feature": "source_Cold Email",
+      "coefficient": 0.006271
+    },
+    {
+      "feature": "source_Referral",
+      "coefficient": -0.003293
+    },
+    {
+      "feature": "source_group_Paid Ads",
+      "coefficient": -0.003012
+    },
+    {
+      "feature": "source_Other",
+      "coefficient": -0.001994
+    },
+    {
+      "feature": "source_group_Other",
+      "coefficient": -0.001994
+    },
+    {
+      "feature": "source_Facebook Ads",
+      "coefficient": -0.00183
+    },
+    {
+      "feature": "source_Networking Event",
+      "coefficient": -0.001223
+    },
+    {
+      "feature": "source_Webinars",
+      "coefficient": 0.000369
+    },
+    {
+      "feature": "notes_has_text",
+      "coefficient": 0.0
+    }
+  ],
+  "g2_rf_gini_importance": [
+    {
+      "feature": "notes_sentiment",
+      "gini_importance": 0.392332
+    },
+    {
+      "feature": "company_freq",
+      "gini_importance": 0.22681
+    },
+    {
+      "feature": "notes_word_count",
+      "gini_importance": 0.171381
+    },
+    {
+      "feature": "owner_freq",
+      "gini_importance": 0.050297
+    },
+    {
+      "feature": "source_tier",
+      "gini_importance": 0.016128
+    },
+    {
+      "feature": "source_LinkedIn Outreach",
+      "gini_importance": 0.009617
+    },
+    {
+      "feature": "source_Cold Call",
+      "gini_importance": 0.009064
+    },
+    {
+      "feature": "source_Referral",
+      "gini_importance": 0.008167
+    },
+    {
+      "feature": "source_Partner Program",
+      "gini_importance": 0.007901
+    },
+    {
+      "feature": "source_group_Inbound",
+      "gini_importance": 0.00753
+    },
+    {
+      "feature": "source_group_Paid Ads",
+      "gini_importance": 0.007319
+    },
+    {
+      "feature": "source_Google Ads",
+      "gini_importance": 0.006499
+    },
+    {
+      "feature": "source_group_Referral / Partner",
+      "gini_importance": 0.005811
+    },
+    {
+      "feature": "source_Networking Event",
+      "gini_importance": 0.005488
+    },
+    {
+      "feature": "source_group_Events",
+      "gini_importance": 0.005377
+    },
+    {
+      "feature": "source_group_Outbound",
+      "gini_importance": 0.005297
+    },
+    {
+      "feature": "source_Chatbot",
+      "gini_importance": 0.005083
+    },
+    {
+      "feature": "source_Podcast",
+      "gini_importance": 0.004601
+    },
+    {
+      "feature": "source_Cold Email",
+      "gini_importance": 0.004574
+    },
+    {
+      "feature": "source_Content Marketing",
+      "gini_importance": 0.00445
+    },
+    {
+      "feature": "source_Webinars",
+      "gini_importance": 0.004433
+    },
+    {
+      "feature": "source_Direct Traffic",
+      "gini_importance": 0.004416
+    },
+    {
+      "feature": "source_Organic Search (SEO)",
+      "gini_importance": 0.004405
+    },
+    {
+      "feature": "source_Website Form",
+      "gini_importance": 0.004293
+    },
+    {
+      "feature": "source_Retargeting Ads",
+      "gini_importance": 0.004245
+    },
+    {
+      "feature": "source_Facebook Ads",
+      "gini_importance": 0.004142
+    },
+    {
+      "feature": "source_Social Media",
+      "gini_importance": 0.003939
+    },
+    {
+      "feature": "source_group_Social Media",
+      "gini_importance": 0.003662
+    },
+    {
+      "feature": "source_Trade Show",
+      "gini_importance": 0.003336
+    },
+    {
+      "feature": "source_group_Other",
+      "gini_importance": 0.003264
+    },
+    {
+      "feature": "source_Other",
+      "gini_importance": 0.003198
+    },
+    {
+      "feature": "source_Purchased List",
+      "gini_importance": 0.002941
+    },
+    {
+      "feature": "notes_has_text",
+      "gini_importance": 0.0
+    }
+  ],
+  "g3_lgbm_split_importance": [
+    {
+      "feature": "notes_sentiment",
+      "split_importance": 4337
+    },
+    {
+      "feature": "company_freq",
+      "split_importance": 2131
+    },
+    {
+      "feature": "notes_word_count",
+      "split_importance": 1701
+    },
+    {
+      "feature": "owner_freq",
+      "split_importance": 520
+    },
+    {
+      "feature": "source_tier",
+      "split_importance": 352
+    },
+    {
+      "feature": "source_group_Events",
+      "split_importance": 178
+    },
+    {
+      "feature": "source_group_Paid Ads",
+      "split_importance": 164
+    },
+    {
+      "feature": "source_group_Inbound",
+      "split_importance": 151
+    },
+    {
+      "feature": "source_Podcast",
+      "split_importance": 144
+    },
+    {
+      "feature": "source_Other",
+      "split_importance": 134
+    },
+    {
+      "feature": "source_Google Ads",
+      "split_importance": 129
+    },
+    {
+      "feature": "source_LinkedIn Outreach",
+      "split_importance": 129
+    },
+    {
+      "feature": "source_Cold Email",
+      "split_importance": 128
+    },
+    {
+      "feature": "source_Social Media",
+      "split_importance": 121
+    },
+    {
+      "feature": "source_Networking Event",
+      "split_importance": 120
+    },
+    {
+      "feature": "source_Cold Call",
+      "split_importance": 117
+    },
+    {
+      "feature": "source_Chatbot",
+      "split_importance": 111
+    },
+    {
+      "feature": "source_Facebook Ads",
+      "split_importance": 104
+    },
+    {
+      "feature": "source_Direct Traffic",
+      "split_importance": 103
+    },
+    {
+      "feature": "source_group_Outbound",
+      "split_importance": 102
+    },
+    {
+      "feature": "source_Webinars",
+      "split_importance": 99
+    },
+    {
+      "feature": "source_Partner Program",
+      "split_importance": 98
+    },
+    {
+      "feature": "source_Retargeting Ads",
+      "split_importance": 98
+    },
+    {
+      "feature": "source_Trade Show",
+      "split_importance": 96
+    },
+    {
+      "feature": "source_Organic Search (SEO)",
+      "split_importance": 95
+    },
+    {
+      "feature": "source_Referral",
+      "split_importance": 92
+    },
+    {
+      "feature": "source_Purchased List",
+      "split_importance": 89
+    },
+    {
+      "feature": "source_Content Marketing",
+      "split_importance": 78
+    },
+    {
+      "feature": "source_Website Form",
+      "split_importance": 62
+    },
+    {
+      "feature": "source_group_Referral / Partner",
+      "split_importance": 27
+    },
+    {
+      "feature": "source_group_Other",
+      "split_importance": 0
+    },
+    {
+      "feature": "source_group_Social Media",
+      "split_importance": 0
+    },
+    {
+      "feature": "notes_has_text",
+      "split_importance": 0
+    }
+  ],
+  "g4_permutation_importance": [
+    {
+      "feature": "notes_sentiment",
+      "mean_drop": 0.008953,
+      "std_drop": 0.005327
+    },
+    {
+      "feature": "notes_word_count",
+      "mean_drop": 0.004188,
+      "std_drop": 0.004207
+    },
+    {
+      "feature": "owner_freq",
+      "mean_drop": 0.002518,
+      "std_drop": 0.001994
+    },
+    {
+      "feature": "source_tier",
+      "mean_drop": 0.002226,
+      "std_drop": 0.002439
+    },
+    {
+      "feature": "notes_has_text",
+      "mean_drop": 0.0,
+      "std_drop": 0.0
+    },
+    {
+      "feature": "company_freq",
+      "mean_drop": -0.004765,
+      "std_drop": 0.005247
+    },
+    {
+      "feature": "source_group",
+      "mean_drop": -0.005239,
+      "std_drop": 0.003662
+    },
+    {
+      "feature": "source",
+      "mean_drop": -0.009671,
+      "std_drop": 0.005381
+    }
+  ],
+  "g5_shap_mean_abs": [
+    {
+      "feature": "notes_word_count",
+      "mean_abs_shap": 0.005713
+    },
+    {
+      "feature": "notes_sentiment",
+      "mean_abs_shap": 0.005179
+    },
+    {
+      "feature": "company_freq",
+      "mean_abs_shap": 0.004284
+    },
+    {
+      "feature": "source_tier",
+      "mean_abs_shap": 0.002668
+    },
+    {
+      "feature": "source_group_Inbound",
+      "mean_abs_shap": 0.001789
+    },
+    {
+      "feature": "owner_freq",
+      "mean_abs_shap": 0.001753
+    },
+    {
+      "feature": "source_group_Referral / Partner",
+      "mean_abs_shap": 0.000896
+    },
+    {
+      "feature": "source_Referral",
+      "mean_abs_shap": 0.000786
+    },
+    {
+      "feature": "source_group_Events",
+      "mean_abs_shap": 0.000766
+    },
+    {
+      "feature": "source_group_Paid Ads",
+      "mean_abs_shap": 0.000757
+    },
+    {
+      "feature": "source_Google Ads",
+      "mean_abs_shap": 0.000672
+    },
+    {
+      "feature": "source_Organic Search (SEO)",
+      "mean_abs_shap": 0.000664
+    },
+    {
+      "feature": "source_Partner Program",
+      "mean_abs_shap": 0.000661
+    },
+    {
+      "feature": "source_Cold Call",
+      "mean_abs_shap": 0.000532
+    },
+    {
+      "feature": "source_Networking Event",
+      "mean_abs_shap": 0.000529
+    },
+    {
+      "feature": "source_Website Form",
+      "mean_abs_shap": 0.00049
+    },
+    {
+      "feature": "source_Direct Traffic",
+      "mean_abs_shap": 0.000481
+    },
+    {
+      "feature": "source_group_Outbound",
+      "mean_abs_shap": 0.000463
+    },
+    {
+      "feature": "source_LinkedIn Outreach",
+      "mean_abs_shap": 0.000458
+    },
+    {
+      "feature": "source_group_Social Media",
+      "mean_abs_shap": 0.000453
+    },
+    {
+      "feature": "source_Webinars",
+      "mean_abs_shap": 0.000441
+    },
+    {
+      "feature": "source_Podcast",
+      "mean_abs_shap": 0.00044
+    },
+    {
+      "feature": "source_Content Marketing",
+      "mean_abs_shap": 0.000434
+    },
+    {
+      "feature": "source_Chatbot",
+      "mean_abs_shap": 0.000428
+    },
+    {
+      "feature": "source_Social Media",
+      "mean_abs_shap": 0.000418
+    },
+    {
+      "feature": "source_Retargeting Ads",
+      "mean_abs_shap": 0.000354
+    },
+    {
+      "feature": "source_Facebook Ads",
+      "mean_abs_shap": 0.000314
+    },
+    {
+      "feature": "source_Trade Show",
+      "mean_abs_shap": 0.000308
+    },
+    {
+      "feature": "source_Cold Email",
+      "mean_abs_shap": 0.000285
+    },
+    {
+      "feature": "source_group_Other",
+      "mean_abs_shap": 0.000269
+    },
+    {
+      "feature": "source_Other",
+      "mean_abs_shap": 0.000268
+    },
+    {
+      "feature": "source_Purchased List",
+      "mean_abs_shap": 0.000262
+    },
+    {
+      "feature": "notes_has_text",
+      "mean_abs_shap": 0.0
+    }
+  ],
+  "l1_local_cases": {
+    "tp": {
+      "label": "True Positive",
+      "sample_idx": 1981,
+      "global_data_idx": 7447,
+      "predicted_prob": 0.5915,
+      "actual_label": 1,
+      "top_shap_features": [
+        {
+          "feature": "company_freq",
+          "shap_value": 0.045209
+        },
+        {
+          "feature": "source_LinkedIn Outreach",
+          "shap_value": 0.022637
+        },
+        {
+          "feature": "source_group_Outbound",
+          "shap_value": 0.006711
+        },
+        {
+          "feature": "notes_word_count",
+          "shap_value": 0.005468
+        },
+        {
+          "feature": "source_tier",
+          "shap_value": 0.002139
+        },
+        {
+          "feature": "source_group_Inbound",
+          "shap_value": 0.001932
+        },
+        {
+          "feature": "source_Referral",
+          "shap_value": 0.001182
+        },
+        {
+          "feature": "source_Cold Call",
+          "shap_value": 0.001165
+        },
+        {
+          "feature": "source_Partner Program",
+          "shap_value": -0.001151
+        },
+        {
+          "feature": "source_Networking Event",
+          "shap_value": 0.00097
+        }
+      ]
+    },
+    "fp": {
+      "label": "False Positive",
+      "sample_idx": 753,
+      "global_data_idx": 9679,
+      "predicted_prob": 0.6512,
+      "actual_label": 0,
+      "top_shap_features": [
+        {
+          "feature": "company_freq",
+          "shap_value": 0.057808
+        },
+        {
+          "feature": "source_Partner Program",
+          "shap_value": 0.035322
+        },
+        {
+          "feature": "source_group_Referral / Partner",
+          "shap_value": 0.014777
+        },
+        {
+          "feature": "source_Referral",
+          "shap_value": 0.010565
+        },
+        {
+          "feature": "source_tier",
+          "shap_value": 0.009612
+        },
+        {
+          "feature": "notes_sentiment",
+          "shap_value": 0.006157
+        },
+        {
+          "feature": "source_group_Inbound",
+          "shap_value": 0.004644
+        },
+        {
+          "feature": "notes_word_count",
+          "shap_value": 0.003434
+        },
+        {
+          "feature": "source_group_Events",
+          "shap_value": 0.001917
+        },
+        {
+          "feature": "owner_freq",
+          "shap_value": 0.001584
+        }
+      ]
+    },
+    "fn": {
+      "label": "False Negative",
+      "sample_idx": 1661,
+      "global_data_idx": 592,
+      "predicted_prob": 0.3867,
+      "actual_label": 1,
+      "top_shap_features": [
+        {
+          "feature": "source_Referral",
+          "shap_value": -0.031641
+        },
+        {
+          "feature": "company_freq",
+          "shap_value": -0.028908
+        },
+        {
+          "feature": "notes_word_count",
+          "shap_value": -0.020627
+        },
+        {
+          "feature": "source_group_Referral / Partner",
+          "shap_value": -0.011923
+        },
+        {
+          "feature": "source_Partner Program",
+          "shap_value": -0.007128
+        },
+        {
+          "feature": "source_tier",
+          "shap_value": -0.003838
+        },
+        {
+          "feature": "notes_sentiment",
+          "shap_value": -0.003816
+        },
+        {
+          "feature": "owner_freq",
+          "shap_value": -0.003423
+        },
+        {
+          "feature": "source_Podcast",
+          "shap_value": -0.001616
+        },
+        {
+          "feature": "source_LinkedIn Outreach",
+          "shap_value": -0.00147
+        }
+      ]
+    },
+    "tn": {
+      "label": "True Negative",
+      "sample_idx": 582,
+      "global_data_idx": 6725,
+      "predicted_prob": 0.3936,
+      "actual_label": 0,
+      "top_shap_features": [
+        {
+          "feature": "source_Referral",
+          "shap_value": -0.02852
+        },
+        {
+          "feature": "company_freq",
+          "shap_value": -0.025988
+        },
+        {
+          "feature": "notes_word_count",
+          "shap_value": -0.015886
+        },
+        {
+          "feature": "source_group_Referral / Partner",
+          "shap_value": -0.010626
+        },
+        {
+          "feature": "source_tier",
+          "shap_value": -0.009127
+        },
+        {
+          "feature": "source_Partner Program",
+          "shap_value": -0.00626
+        },
+        {
+          "feature": "notes_sentiment",
+          "shap_value": -0.005692
+        },
+        {
+          "feature": "owner_freq",
+          "shap_value": -0.003508
+        },
+        {
+          "feature": "source_group_Events",
+          "shap_value": -0.001204
+        },
+        {
+          "feature": "source_Podcast",
+          "shap_value": -0.001183
+        }
+      ]
+    }
+  },
+  "c1_actual_vs_predicted": [
+    {
+      "source": "Podcast",
+      "n": 5134,
+      "actual_win_rate": 0.1069,
+      "mean_predicted_prob": 0.5036,
+      "gap": 0.3967
+    },
+    {
+      "source": "Partner Program",
+      "n": 5076,
+      "actual_win_rate": 0.1066,
+      "mean_predicted_prob": 0.5049,
+      "gap": 0.3983
+    },
+    {
+      "source": "Referral",
+      "n": 4994,
+      "actual_win_rate": 0.1059,
+      "mean_predicted_prob": 0.5022,
+      "gap": 0.3963
+    },
+    {
+      "source": "Webinars",
+      "n": 4979,
+      "actual_win_rate": 0.1056,
+      "mean_predicted_prob": 0.5038,
+      "gap": 0.3982
+    },
+    {
+      "source": "Content Marketing",
+      "n": 4935,
+      "actual_win_rate": 0.1046,
+      "mean_predicted_prob": 0.5003,
+      "gap": 0.3958
+    },
+    {
+      "source": "LinkedIn Outreach",
+      "n": 4825,
+      "actual_win_rate": 0.1038,
+      "mean_predicted_prob": 0.5001,
+      "gap": 0.3963
+    },
+    {
+      "source": "Cold Email",
+      "n": 5086,
+      "actual_win_rate": 0.102,
+      "mean_predicted_prob": 0.4995,
+      "gap": 0.3975
+    },
+    {
+      "source": "Cold Call",
+      "n": 5032,
+      "actual_win_rate": 0.101,
+      "mean_predicted_prob": 0.4944,
+      "gap": 0.3935
+    },
+    {
+      "source": "Facebook Ads",
+      "n": 4908,
+      "actual_win_rate": 0.0996,
+      "mean_predicted_prob": 0.4968,
+      "gap": 0.3972
+    },
+    {
+      "source": "Chatbot",
+      "n": 4909,
+      "actual_win_rate": 0.099,
+      "mean_predicted_prob": 0.4883,
+      "gap": 0.3893
+    },
+    {
+      "source": "Retargeting Ads",
+      "n": 5102,
+      "actual_win_rate": 0.099,
+      "mean_predicted_prob": 0.4989,
+      "gap": 0.3999
+    },
+    {
+      "source": "Direct Traffic",
+      "n": 4986,
+      "actual_win_rate": 0.0989,
+      "mean_predicted_prob": 0.4861,
+      "gap": 0.3872
+    },
+    {
+      "source": "Organic Search (SEO)",
+      "n": 5113,
+      "actual_win_rate": 0.0982,
+      "mean_predicted_prob": 0.4842,
+      "gap": 0.386
+    },
+    {
+      "source": "Trade Show",
+      "n": 5079,
+      "actual_win_rate": 0.0971,
+      "mean_predicted_prob": 0.5012,
+      "gap": 0.4041
+    },
+    {
+      "source": "Google Ads",
+      "n": 5020,
+      "actual_win_rate": 0.097,
+      "mean_predicted_prob": 0.49,
+      "gap": 0.393
+    },
+    {
+      "source": "Social Media",
+      "n": 4996,
+      "actual_win_rate": 0.0967,
+      "mean_predicted_prob": 0.484,
+      "gap": 0.3873
+    },
+    {
+      "source": "Purchased List",
+      "n": 5015,
+      "actual_win_rate": 0.0955,
+      "mean_predicted_prob": 0.4949,
+      "gap": 0.3994
+    },
+    {
+      "source": "Other",
+      "n": 4872,
+      "actual_win_rate": 0.0952,
+      "mean_predicted_prob": 0.488,
+      "gap": 0.3928
+    },
+    {
+      "source": "Website Form",
+      "n": 5069,
+      "actual_win_rate": 0.0929,
+      "mean_predicted_prob": 0.4843,
+      "gap": 0.3914
+    },
+    {
+      "source": "Networking Event",
+      "n": 4870,
+      "actual_win_rate": 0.0928,
+      "mean_predicted_prob": 0.4885,
+      "gap": 0.3956
+    }
+  ],
+  "causal_boundary_statement": {
+    "global_importance": "All global importance metrics (LR coefficients, RF Gini, LGBM splits, permutation importance, SHAP) describe associations learned from training data. A high LR coefficient for 'source_Podcast' means the model associates Podcast leads with higher win probability based on observed win rate differences. It does NOT mean that Podcast causes wins. The 1.41 pp win rate advantage may reflect unmeasured confounders: lead quality, industry segment, deal size, or sales rep assignment.",
+    "local_predictions": "SHAP waterfall values explain why the model assigned a particular probability to a specific prediction. They attribute credit to input features but do not identify causal mechanisms. A SHAP value of +0.02 for 'source_Referral' means the model pushed its probability estimate upward by 0.02 for that feature \u2014 not that Referral caused the lead to be won.",
+    "permutation_finding": "Permutation importance (G4) is the definitive test: shuffling any feature yields near-zero or negative ROC-AUC change. This confirms that no available feature provides genuine predictive lift beyond random chance. The model is essentially guessing at ROC-AUC ~0.50\u20130.51.",
+    "practical_implication": "The source-level win rate differences (9.28%\u201310.69%) are real analytical findings for CHANNEL INVESTMENT DECISIONS (Phases 3\u20134). They are not sufficient as an individual-lead scoring signal. A useful predictive model requires additional features: deal size, industry, response time, engagement score, number of follow-ups."
+  }
+}

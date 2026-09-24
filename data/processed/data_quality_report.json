@@ -1,0 +1,24 @@
+{
+  "total_raw": 100000,
+  "missing_values_per_col": {
+    "Index": 0,
+    "Account Id": 0,
+    "Lead Owner": 0,
+    "First Name": 0,
+    "Last Name": 0,
+    "Company": 0,
+    "Phone 1": 0,
+    "Phone 2": 0,
+    "Email 1": 0,
+    "Email 2": 0,
+    "Website": 0,
+    "Source": 0,
+    "Deal Stage": 0,
+    "Notes": 0
+  },
+  "invalid_source": 0,
+  "invalid_stage": 0,
+  "duplicate_account_ids": 0,
+  "total_processed": 100000,
+  "textblob_available": true
+}

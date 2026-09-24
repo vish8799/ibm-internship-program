@@ -1,0 +1,301 @@
+{
+  "dataset_info": {
+    "total_samples": 100000,
+    "train_samples": 80000,
+    "test_samples": 20000,
+    "positive_class_pct": 9.99,
+    "features": [
+      "source",
+      "source_group",
+      "notes_sentiment",
+      "notes_word_count"
+    ],
+    "target": "is_won"
+  },
+  "model_results": [
+    {
+      "model": "Logistic Regression",
+      "accuracy": 0.4909,
+      "precision": 0.1027,
+      "recall": 0.5293,
+      "f1_score": 0.172,
+      "roc_auc": 0.5086,
+      "confusion_matrix": [
+        [
+          8759,
+          9242
+        ],
+        [
+          941,
+          1058
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 0.903,
+          "recall": 0.4866,
+          "f1-score": 0.6324,
+          "support": 18001.0
+        },
+        "1": {
+          "precision": 0.1027,
+          "recall": 0.5293,
+          "f1-score": 0.172,
+          "support": 1999.0
+        },
+        "accuracy": 0.4909,
+        "macro avg": {
+          "precision": 0.5029,
+          "recall": 0.5079,
+          "f1-score": 0.4022,
+          "support": 20000.0
+        },
+        "weighted avg": {
+          "precision": 0.823,
+          "recall": 0.4909,
+          "f1-score": 0.5864,
+          "support": 20000.0
+        }
+      }
+    },
+    {
+      "model": "Random Forest",
+      "accuracy": 0.5301,
+      "precision": 0.1025,
+      "recall": 0.4772,
+      "f1_score": 0.1688,
+      "roc_auc": 0.5019,
+      "confusion_matrix": [
+        [
+          9648,
+          8353
+        ],
+        [
+          1045,
+          954
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 0.9023,
+          "recall": 0.536,
+          "f1-score": 0.6725,
+          "support": 18001.0
+        },
+        "1": {
+          "precision": 0.1025,
+          "recall": 0.4772,
+          "f1-score": 0.1688,
+          "support": 1999.0
+        },
+        "accuracy": 0.5301,
+        "macro avg": {
+          "precision": 0.5024,
+          "recall": 0.5066,
+          "f1-score": 0.4206,
+          "support": 20000.0
+        },
+        "weighted avg": {
+          "precision": 0.8223,
+          "recall": 0.5301,
+          "f1-score": 0.6221,
+          "support": 20000.0
+        }
+      }
+    }
+  ],
+  "cross_validation": [
+    {
+      "model": "Logistic Regression",
+      "cv_folds": 5,
+      "roc_auc_scores": [
+        0.5085,
+        0.5141,
+        0.5042,
+        0.5058,
+        0.5108
+      ],
+      "roc_auc_mean": 0.5087,
+      "roc_auc_std": 0.0035
+    },
+    {
+      "model": "Random Forest",
+      "cv_folds": 5,
+      "roc_auc_scores": [
+        0.5028,
+        0.5151,
+        0.5024,
+        0.5071,
+        0.5009
+      ],
+      "roc_auc_mean": 0.5057,
+      "roc_auc_std": 0.0051
+    }
+  ],
+  "feature_importance": [
+    {
+      "feature": "notes_sentiment",
+      "importance": 0.716038
+    },
+    {
+      "feature": "notes_word_count",
+      "importance": 0.183471
+    },
+    {
+      "feature": "source_Networking Event",
+      "importance": 0.008925
+    },
+    {
+      "feature": "source_Partner Program",
+      "importance": 0.007024
+    },
+    {
+      "feature": "source_Google Ads",
+      "importance": 0.006512
+    },
+    {
+      "feature": "source_group_Referral / Partner",
+      "importance": 0.005895
+    },
+    {
+      "feature": "source_Podcast",
+      "importance": 0.005598
+    },
+    {
+      "feature": "source_Webinars",
+      "importance": 0.004783
+    },
+    {
+      "feature": "source_Website Form",
+      "importance": 0.004611
+    },
+    {
+      "feature": "source_Cold Call",
+      "importance": 0.004185
+    },
+    {
+      "feature": "source_group_Paid Ads",
+      "importance": 0.003981
+    },
+    {
+      "feature": "source_Content Marketing",
+      "importance": 0.00398
+    },
+    {
+      "feature": "source_Organic Search (SEO)",
+      "importance": 0.003849
+    },
+    {
+      "feature": "source_Cold Email",
+      "importance": 0.003501
+    },
+    {
+      "feature": "source_Referral",
+      "importance": 0.003136
+    },
+    {
+      "feature": "source_group_Inbound",
+      "importance": 0.003128
+    },
+    {
+      "feature": "source_group_Social Media",
+      "importance": 0.002961
+    },
+    {
+      "feature": "source_Facebook Ads",
+      "importance": 0.002863
+    },
+    {
+      "feature": "source_Direct Traffic",
+      "importance": 0.002838
+    },
+    {
+      "feature": "source_Chatbot",
+      "importance": 0.002754
+    }
+  ],
+  "lr_coefficients": [
+    {
+      "feature": "source_Networking Event",
+      "coefficient": -0.105267
+    },
+    {
+      "feature": "notes_sentiment",
+      "coefficient": -0.092627
+    },
+    {
+      "feature": "source_Content Marketing",
+      "coefficient": 0.071517
+    },
+    {
+      "feature": "source_Podcast",
+      "coefficient": 0.06792
+    },
+    {
+      "feature": "source_Partner Program",
+      "coefficient": 0.051779
+    },
+    {
+      "feature": "source_Google Ads",
+      "coefficient": -0.051319
+    },
+    {
+      "feature": "source_group_Referral / Partner",
+      "coefficient": 0.044915
+    },
+    {
+      "feature": "source_Webinars",
+      "coefficient": 0.044165
+    },
+    {
+      "feature": "source_Website Form",
+      "coefficient": -0.038353
+    },
+    {
+      "feature": "source_Organic Search (SEO)",
+      "coefficient": -0.035687
+    },
+    {
+      "feature": "source_Facebook Ads",
+      "coefficient": 0.034019
+    },
+    {
+      "feature": "source_Social Media",
+      "coefficient": -0.028781
+    },
+    {
+      "feature": "source_group_Social Media",
+      "coefficient": -0.028781
+    },
+    {
+      "feature": "source_Direct Traffic",
+      "coefficient": -0.025918
+    },
+    {
+      "feature": "source_Other",
+      "coefficient": -0.021449
+    },
+    {
+      "feature": "source_group_Other",
+      "coefficient": -0.021449
+    },
+    {
+      "feature": "source_Purchased List",
+      "coefficient": -0.016523
+    },
+    {
+      "feature": "source_group_Inbound",
+      "coefficient": -0.014915
+    },
+    {
+      "feature": "source_group_Paid Ads",
+      "coefficient": -0.013878
+    },
+    {
+      "feature": "source_Chatbot",
+      "coefficient": 0.013527
+    }
+  ],
+  "best_model": "Logistic Regression",
+  "best_model_path": "models\\best_model.pkl"
+}
