@@ -131,7 +131,11 @@ All analytical metrics were computed during Phase 3 and verified against SQL acc
 - **Active Open Pipeline**: 70,074 leads (**70.1%** of total volume)
 - **Overall Close Rate**: 29.93% (Closed Won + Closed Lost + Disqualified)
 
+![Deal Stage Funnel Pipeline](reports/figures/fig_04_funnel_pipeline.png)
+
 ### Acquisition Channel Rankings (All 20 Sources)
+
+![Win Rate by Acquisition Channel](reports/figures/fig_01_win_rate_by_source.png)
 
 | Rank | Acquisition Channel | Total Leads | Closed Won | Win Rate | Won:Lost Ratio | Source Group |
 |:---:|---|:---:|:---:|:---:|:---:|---|
@@ -209,6 +213,10 @@ Phase 6 implemented transparent model explainability using SHAP (SHapley Additiv
   - `owner_freq`: `0.003980`
   - `source_tier`: `0.002890`
 
+![SHAP Global Importance Summary](reports/figures/expl_g5_shap_summary.png)
+
+![Logistic Regression Feature Coefficients](reports/figures/expl_g1_lr_coefficients.png)
+
 ### 2. Local Instance Waterfall Analysis
 Four individual CRM cases were evaluated to assess prediction dynamics:
 - **True Positive (TP)**: Predicted probability: `0.5915` (Actual: Won). Top positive contribution: `company_freq` (+0.045).
@@ -231,32 +239,66 @@ Phase 8 integrates IBM watsonx.ai Granite LLM (`ibm/granite-13b-chat-v2`) with d
 
 ## 10. Visual Dashboard Interfaces
 
-### 10.1 Streamlit Interactive Dashboard
+The platform features two fully functional dashboard implementations designed for operational analysis, predictive simulation, and executive presentations.
 
-Located at [`dashboard/streamlit_app.py`](dashboard/streamlit_app.py), running on port 8501:
+### 10.1 Streamlit Interactive Dashboard (`dashboard/streamlit_app.py`)
 
-| View Name | Interface Preview | Features & Functional Capability |
-|---|---|---|
-| **Overview** | ![Streamlit Overview](dashboard_screenshots/streamlit_dashboard/01_overview.png) | Real-time KPI tiles with baseline comparison deltas, deal-stage funnel bars, ranked channel win rates, and volume vs. win-rate scatter charts. |
-| **Performance** | ![Streamlit Performance](dashboard_screenshots/streamlit_dashboard/02_performance.png) | Channel group volume/conversion bars, multi-stage conversion heatmap, won-vs-lost distributions, and sortable summary tables. |
-| **Explainability** | ![Streamlit Explainability](dashboard_screenshots/streamlit_dashboard/03_explainability.png) | Global SHAP summary, permutation drop metrics, Logistic Regression coefficients, and four local instance waterfall charts. |
-| **AI Insights** | ![Streamlit AI Insights](dashboard_screenshots/streamlit_dashboard/04_ai_insights.png) | Watsonx.ai narrative executive summary, provenance metadata snapshot, and 9 categorized strategic insight cards. |
-| **What-If Scorer** | ![Streamlit What-If Scorer](dashboard_screenshots/streamlit_dashboard/05_what_if_scorer.png) | Interactive simulator allowing reps to test custom lead attributes and receive live win probability scores and feature contribution bars. |
+Run via `streamlit run dashboard/streamlit_app.py`. Features real-time reactive filtering across 20 acquisition channels, 7 source categories, and assigned sales representatives.
+
+#### 10.1.1 View 1 — Executive Overview
+Provides sales leadership with top-level KPI summary cards displaying dynamic delta benchmarks against the full 100,000-lead population, a 10-stage pipeline funnel bar distribution, channel win-rate rankings, and an interactive scatter plot correlating lead volume against conversion rates.
+
+![Streamlit Overview View](dashboard_screenshots/streamlit_dashboard/01_overview.png)
+
+#### 10.1.2 View 2 — Channel Performance Matrix
+Enables deep-dive channel comparative analytics. Displays win rate and lead volume side-by-side across 7 source groups, an interactive composite heatmap evaluating cross-stage density, won-to-lost stacked volume bars, and a sortable summary table.
+
+![Streamlit Channel Performance View](dashboard_screenshots/streamlit_dashboard/02_performance.png)
+
+#### 10.1.3 View 3 — Model Explainability Suite
+Presents transparent algorithmic governance. Integrates global SHAP feature impact rankings, permutation importance drops, normalized Logistic Regression coefficients, and four local customer waterfall breakdowns (True Positive, False Positive, True Negative, False Negative).
+
+![Streamlit Model Explainability View](dashboard_screenshots/streamlit_dashboard/03_explainability.png)
+
+#### 10.1.4 View 4 — AI Strategic Briefing (IBM watsonx.ai)
+Surfaces generative executive summaries produced by IBM watsonx.ai Granite-13B LLM (with deterministic heuristic fallback), accompanied by a strict 56-key context provenance snapshot and 9 categorized analytical insight cards.
+
+![Streamlit AI Insights View](dashboard_screenshots/streamlit_dashboard/04_ai_insights.png)
+
+#### 10.1.5 View 5 — Interactive What-If Lead Scorer
+An interactive predictive sandbox where account executives adjust prospective lead parameters (source channel, category, owner assignment, notes sentiment score, word count) to evaluate real-time model scoring and directional feature attributions.
+
+![Streamlit What-If Scorer View](dashboard_screenshots/streamlit_dashboard/05_what_if_scorer.png)
 
 ---
 
-### 10.2 Standalone HTML / ECharts Dashboard
+### 10.2 Standalone HTML / ECharts Executive Dashboard (`dashboard/index.html`)
 
-Located at [`dashboard/index.html`](dashboard/index.html) — a zero-dependency, self-contained single-page dashboard utilizing Apache ECharts:
+A zero-dependency, self-contained single-page dashboard designed for instant browser presentation and offline review at [`dashboard/index.html`](dashboard/index.html).
 
-| View Name | Interface Preview | Strategic Focus |
-|---|---|---|
-| **Overview** | ![HTML Overview](dashboard_screenshots/html_dashboard/01_overview.png) | High-level metrics, deal stage donut chart, and ranked channel win rates. |
-| **Source Performance** | ![HTML Sources](dashboard_screenshots/html_dashboard/02_source_performance.png) | Interactive category filtering, group volume distributions, and sortable channel leaderboards. |
-| **Pipeline Funnel** | ![HTML Funnel](dashboard_screenshots/html_dashboard/03_pipeline_funnel.png) | Full 10-stage conversion funnel drop-off analysis and terminal status ratios. |
-| **ML Model Benchmarks** | ![HTML ML](dashboard_screenshots/html_dashboard/04_ml_model.png) | Train/Val/Test ROC-AUC, 5-fold cross-validation performance, and metric comparison charts. |
-| **Explainability Suite** | ![HTML Explainability](dashboard_screenshots/html_dashboard/05_explainability.png) | Coefficient tables, RF Gini importance vs. Permutation importance, and SHAP distributions. |
-| **AI Insights** | ![HTML AI Insights](dashboard_screenshots/html_dashboard/06_ai_insights.png) | 9 structured analytical evaluations with status badges and business recommendations. |
+#### 10.2.1 Executive Overview
+![HTML Overview View](dashboard_screenshots/html_dashboard/01_overview.png)
+*Key Features*: Top KPI metric tiles, deal stage distribution donut chart, outcome breakdown by channel group, and ranked channel win-rate bar charts.
+
+#### 10.2.2 Source Performance Leaderboard
+![HTML Source Performance View](dashboard_screenshots/html_dashboard/02_source_performance.png)
+*Key Features*: Dynamic category filtering, channel-level conversion rates, and volume distribution comparisons.
+
+#### 10.2.3 Pipeline Funnel Drop-off Analysis
+![HTML Pipeline Funnel View](dashboard_screenshots/html_dashboard/03_pipeline_funnel.png)
+*Key Features*: Full 10-stage conversion progression, drop-off rates between adjacent stages, and terminal status ratios.
+
+#### 10.2.4 Machine Learning Benchmarks
+![HTML ML Model Benchmarks View](dashboard_screenshots/html_dashboard/04_ml_model.png)
+*Key Features*: Train, validation, and test ROC-AUC comparisons across Logistic Regression, Random Forest, and LightGBM alongside 5-fold cross-validation performance.
+
+#### 10.2.5 Explainability & Attribution
+![HTML Explainability View](dashboard_screenshots/html_dashboard/05_explainability.png)
+*Key Features*: Logistic Regression coefficient comparisons, Gini importance versus Permutation drop benchmarks, and global SHAP attribution.
+
+#### 10.2.6 AI Strategic Insights
+![HTML AI Strategic Insights View](dashboard_screenshots/html_dashboard/06_ai_insights.png)
+*Key Features*: 9 structured analytical evaluations with status badges, verified figures, and operational recommendations.
 
 ---
 
