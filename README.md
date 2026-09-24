@@ -4,7 +4,7 @@ A production-grade, end-to-end B2B lead analytics and AI-narrative platform buil
 
 ![Lead Intelligence Platform Hero Overview](dashboard_screenshots/streamlit_dashboard/01_overview.png)
 
-> 📖 **Comprehensive Documentation:** For the full technical report, phase-by-phase data engineering walkthrough, explainability details, and complete architecture specifications, see **[PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md)**.
+> 📖 **Project Documentation:** For the full technical report and architecture specifications, see **[DOCUMENTATION.md](DOCUMENTATION.md)** and **[PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md)**.
 
 ---
 
